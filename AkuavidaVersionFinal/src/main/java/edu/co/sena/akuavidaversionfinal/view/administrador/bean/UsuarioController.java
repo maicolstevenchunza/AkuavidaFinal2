@@ -175,6 +175,8 @@ public class UsuarioController implements Serializable {
                     getFacade().edit(selectedBuscar);
                 } else {
                     getFacade().remove(selectedBuscar);
+                    idBuscar=null;
+                    correoBuscar=null;
                 }
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
