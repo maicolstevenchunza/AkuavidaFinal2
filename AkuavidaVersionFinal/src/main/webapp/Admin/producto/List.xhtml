@@ -22,6 +22,7 @@
                                  rowKey="#{item.IDproducto}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
+                                 emptyMessage="#{bundle.BuscarListMessage}"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -156,6 +157,7 @@
                                  rowKey="#{itemEncontrados.IDproducto}"
                                  rows="5"
                                  rowsPerPageTemplate="10,20,30,40,50"
+                                 emptyMessage="#{bundle.BuscarListMessage}"
                                  >
 
                         <p:ajax event="rowSelect"   update="viewButtonBuscar2 editButtonBuscar2 deleteButtonBuscar2"/>
@@ -219,7 +221,7 @@
 
                             <p:commandButton id="viewButtonBuscar2"   icon="ui-icon-search" value="#{bundle.View}" update=":ProductoViewFormBuscar" oncomplete="PF('ProductoViewDialogBuscar').show()" disabled="#{empty productoController.selectedBuscar}"/>
                             <p:commandButton id="editButtonBuscar2"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ProductoEditFormBuscar" oncomplete="PF('ProductoEditDialogBuscar').show()" disabled="#{empty productoController.selectedBuscar}"/>
-                            <p:commandButton id="deleteButtonBuscar2" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{productoController.eliminarBuscado}" update=":growl,:BuscarProductoListForm:datalist2, :ProductoListForm:datalist" disabled="#{empty productoController.selectedBuscar}"/>
+                            <p:commandButton id="deleteButtonBuscar2" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{productoController.eliminarBuscado}" update=":growl,:BuscarProductoListForm:datalist2, :ProductoListForm:datalist,:panelBusqueda" disabled="#{empty productoController.selectedBuscar}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

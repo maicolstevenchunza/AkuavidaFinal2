@@ -176,6 +176,9 @@ public class ProductoController implements Serializable {
                     getFacade().edit(selectedBuscar);
                 } else {
                     getFacade().remove(selectedBuscar);
+                    IDCategoriaBuscar = null;
+                    idBuscar = null;
+                    nombreBuscar = null;
                 }
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
