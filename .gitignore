@@ -14,6 +14,17 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
+Archivos #Java
+* .jar
+* .class
+
+#mysql worbench temporales
+* .bak
+
+#Directorios Que java no Necesarios hijo
+target /
+dist /
+
 # Windows shortcuts
 *.lnk
 
