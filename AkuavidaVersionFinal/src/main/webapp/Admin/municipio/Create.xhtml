@@ -13,7 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{municipioController.selected != null}">
                         
-                        <p:outputLabel value="#{bundle.CreateMunicipioLabel_nombreMunicipio}" for="nombreMunicipio" />
+                        <p:outputLabel value="#{bundle.CreateMunicipioLabel_nombreMunicipio}" for="departamentoidDepartamento" />
                         <p:inputText id="nombreMunicipio" value="#{municipioController.selected.nombreMunicipio}" title="#{bundle.CreateMunicipioTitle_nombreMunicipio}" required="true" requiredMessage="#{bundle.CreateMunicipioRequiredMessage_nombreMunicipio}"/>
                         <p:outputLabel value="#{bundle.CreateMunicipioLabel_departamentoidDepartamento}" for="departamentoidDepartamento" />
                         <p:selectOneMenu id="departamentoidDepartamento" value="#{municipioController.selected.departamentoidDepartamento}" required="true" requiredMessage="#{bundle.EditMunicipioRequiredMessage_departamentoidDepartamento}">
