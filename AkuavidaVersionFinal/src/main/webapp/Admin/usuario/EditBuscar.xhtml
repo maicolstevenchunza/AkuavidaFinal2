@@ -27,7 +27,7 @@
                        <p:outputLabel value="#{bundle.EditUsuarioLabel_correo}" for="correo" />
                         <p:inputText id="correo" value="#{usuarioController.selectedBuscar.correo}" title="#{bundle.EditUsuarioTitle_correo}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_correo}"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{usuarioController.update}" value="#{bundle.Save}" update="display,:UsuarioListForm:datalist,:BuscarUsuarioListForm:datalist2,:growl" oncomplete="handleSubmit(args, 'UsuarioEditDialogBuscar');"/>
+                    <p:commandButton actionListener="#{usuarioController.updateBuscar()}" value="#{bundle.Save}" update="display,:UsuarioListForm:datalist,:BuscarUsuarioListForm:datalist2,:growl" oncomplete="handleSubmit(args, 'UsuarioEditDialogBuscar');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="UsuarioEditDialogBuscar.hide()"/>
                 </h:panelGroup>
             </h:form>
