@@ -80,7 +80,17 @@
                             <p:commandButton id="botonNomMun" icon="ui-icon-search" value="#{bundle.Buscar}" update=":BuscarMunicipioListForm, :panelBusqueda " actionListener="#{municipioController.buscarPorNombre}" />
                             <p:message for="buscarNomMun" />
                         </h:panelGrid>
-                    </h:form>              
+                    </h:form>  
+                    <!--Formulario de buscar por departamento -->
+                    <h:form id="BuscarNombreDepartamentoForm">
+                        <p:messages autoUpdate="true" closable="true" for="buscarNomDep"/>
+                        <h:panelGrid id="grid1" columns="5"  cellspacing="0">
+                            <p:outputLabel  for="buscarNomDep" value="#{bundle.BuscarMunicipioLabel_NombreDepartamento}" />
+                            <p:inputText id="buscarNomDep" required="true" value="#{municipioController.nombreDepBuscar}" title="#{bundle.BuscarMunicipioTitle_NombreDepartamento}"/>
+                            <p:commandButton id="BotonNomDep" icon="ui-icon-search" value="#{bundle.Buscar}" update=":BuscarMunicipioListForm, :panelBusqueda " actionListener="#{municipioController.buscarPorNombreDep}" />
+                            <p:message for="buscarNomDep" />
+                        </h:panelGrid>
+                    </h:form>  
                      
                 </h:panelGroup>    
             </p:panel>   

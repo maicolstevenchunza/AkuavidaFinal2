@@ -18,6 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class MunicipioFacade extends AbstractFacade<Municipio> {
+
     @PersistenceContext(unitName = "edu.co.sena_AkuavidaVersionFinal_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -29,17 +30,24 @@ public class MunicipioFacade extends AbstractFacade<Municipio> {
     public MunicipioFacade() {
         super(Municipio.class);
     }
-    
+
     public List<Municipio> finById(Object id) {
         Query queryJPQL = getEntityManager().createNamedQuery("Municipio.findByIdMunicipio");
         queryJPQL.setParameter("idMunicipio", id);
         return queryJPQL.getResultList();
     }
-    
+
     public List<Municipio> findByParteNombre(String nombreMunBuscar) {
         String sqlQuery = "SELECT * FROM municipio mun where mun.NOMBRE_MUNICIPIO like '%" + nombreMunBuscar + "%';";
         Query query2 = getEntityManager().createNativeQuery(sqlQuery, Municipio.class);
         return query2.getResultList();
     }
-    
+
+    public List<Municipio> findByParteNombreDep(String nombreDepBuscar) {
+        String sqlQuery = "select * from akuavida.departamento d, akuavida.municipio m where d.idDepartamento=m.Departamento_idDepartamento "
+                + "and d.Nombre_Departamento like '%"+nombreDepBuscar+"%';";
+        Query query3 = getEntityManager().createNativeQuery(sqlQuery, Municipio.class);
+        return query3.getResultList();
+    }
+
 }

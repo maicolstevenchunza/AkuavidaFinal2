@@ -32,6 +32,8 @@ public class MunicipioController implements Serializable {
 
     private Integer idBuscar;
     private String nombreBuscar;
+    private String nombreDepBuscar;
+    
 
     public MunicipioController() {
     }
@@ -113,6 +115,12 @@ public class MunicipioController implements Serializable {
 
     public List<Municipio> buscarPorNombre() {
         itemsBuscados = getFacade().findByParteNombre(nombreBuscar);
+        items = null;
+        idBuscar = null;
+        return itemsBuscados;
+    }
+    public List<Municipio> buscarPorNombreDep() {
+        itemsBuscados = getFacade().findByParteNombreDep(nombreDepBuscar);
         items = null;
         idBuscar = null;
         return itemsBuscados;
@@ -215,6 +223,14 @@ public class MunicipioController implements Serializable {
 
     public void setNombreBuscar(String nombreBuscar) {
         this.nombreBuscar = nombreBuscar;
+    }
+
+    public String getNombreDepBuscar() {
+        return nombreDepBuscar;
+    }
+
+    public void setNombreDepBuscar(String nombreDepBuscar) {
+        this.nombreDepBuscar = nombreDepBuscar;
     }
 
     @FacesConverter(forClass = Municipio.class)
