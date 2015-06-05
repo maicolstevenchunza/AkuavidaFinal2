@@ -23,18 +23,19 @@
                                  rowKey="#{item.idDepartamento}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
+                                 emptyMessage="#{bundle.BuscarListEmptyMSS}"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
+                        <p:column sortBy="#{item.idDepartamento}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDepartamentoTitle_idDepartamento}"/>
                             </f:facet>
                             <h:outputText value="#{item.idDepartamento}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{item.nombreDepartamento}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDepartamentoTitle_nombreDepartamento}"/>
                             </f:facet>
@@ -87,18 +88,19 @@
                                  rowKey="#{itemEncontrados.idDepartamento}"
                                  rows="5"
                                  rowsPerPageTemplate="5,10,20,30,40,50"
+                                 emptyMessage="#{bundle.BuscarListEmptyMSS}"
                                  >
 
                         <p:ajax event="rowSelect"   update="viewButtonBuscar2 editButtonBuscar2 deleteButtonBuscar2"/>
                         <p:ajax event="rowUnselect" update="viewButtonBuscar2 editButtonBuscar2 deleteButtonBuscar2"/>
 
-                        <p:column>
+                        <p:column sortBy="#{itemEncontrados.idDepartamento}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDepartamentoTitle_idDepartamento}"/>
                             </f:facet>
                             <h:outputText value="#{itemEncontrados.idDepartamento}"/>
                         </p:column>
-                        <p:column>
+                        <p:column sortBy="#{itemEncontrados.nombreDepartamento}">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListDepartamentoTitle_nombreDepartamento}"/>
                             </f:facet>
