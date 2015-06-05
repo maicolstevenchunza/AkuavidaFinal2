@@ -25,10 +25,19 @@ public class CategoriasController implements Serializable {
 
     @EJB
     private edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.CategoriasFacade ejbFacade;
-    private List<Categorias> items = null;
+        private List<Categorias> items = null;
+    private List<Categorias> itemsBuscados = null;
     private Categorias selected;
+    private Categorias selectedBuscar;
+
+    private Integer idBuscar;
+    private String nombreBuscar;
+    private boolean activoBuscado;
+
+
 
     public CategoriasController() {
+
     }
 
     public Categorias getSelected() {
@@ -64,6 +73,14 @@ public class CategoriasController implements Serializable {
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CategoriasUpdated"));
+        selectedBuscar = null;
+        itemsBuscados = null;
+    }
+
+    public void updateBuscar() {
+        persist(PersistAction.UPDATEBUSCAR, ResourceBundle.getBundle("/Bundle").getString("CategoriasUpdated"));
+        items = null;
+        selected = null;
     }
 
     public void destroy() {
@@ -74,11 +91,43 @@ public class CategoriasController implements Serializable {
         }
     }
 
+    public void eliminarBuscado() {
+        persist(PersistAction.DELETEBUSCAR, ResourceBundle.getBundle("/Bundle").getString("CategoriasDeleted"));
+        if (!JsfUtil.isValidationFailed()) {
+            selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+        itemsBuscados = null;
+        selectedBuscar = null;
+    }
+
     public List<Categorias> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
         return items;
+    }
+
+    public List<Categorias> buscarPorId() {
+        itemsBuscados = getFacade().finById(idBuscar);
+        nombreBuscar = null;
+        items = null;
+        return itemsBuscados;
+    }
+
+    public List<Categorias> buscarPorNombre() {
+        itemsBuscados = getFacade().findByNombreCateg(nombreBuscar);
+        items = null;
+        idBuscar = null;
+        return itemsBuscados;
+    }
+
+    public List<Categorias> buscarEstado() {
+        itemsBuscados = getFacade().findByEstado(activoBuscado);
+        items = null;
+        nombreBuscar = null;
+        idBuscar = null;
+        return itemsBuscados;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -89,6 +138,32 @@ public class CategoriasController implements Serializable {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
+                }
+                JsfUtil.addSuccessMessage(successMessage);
+            } catch (EJBException ex) {
+                String msg = "";
+                Throwable cause = ex.getCause();
+                if (cause != null) {
+                    msg = cause.getLocalizedMessage();
+                }
+                if (msg.length() > 0) {
+                    JsfUtil.addErrorMessage(msg);
+                } else {
+                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            }
+        }
+
+        if (selectedBuscar != null) {
+            setEmbeddableKeys();
+            try {
+                if (persistAction != PersistAction.DELETEBUSCAR) {
+                    getFacade().edit(selectedBuscar);
+                } else {
+                    getFacade().remove(selectedBuscar);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
@@ -119,6 +194,46 @@ public class CategoriasController implements Serializable {
 
     public List<Categorias> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+
+    public List<Categorias> getItemsBuscados() {
+        return itemsBuscados;
+    }
+
+    public void setItemsBuscados(List<Categorias> itemsBuscados) {
+        this.itemsBuscados = itemsBuscados;
+    }
+
+    public Categorias getSelectedBuscar() {
+        return selectedBuscar;
+    }
+
+    public void setSelectedBuscar(Categorias selectedBuscar) {
+        this.selectedBuscar = selectedBuscar;
+    }
+
+    public Integer getIdBuscar() {
+        return idBuscar;
+    }
+
+    public void setIdBuscar(Integer idBuscar) {
+        this.idBuscar = idBuscar;
+    }
+
+    public String getNombreBuscar() {
+        return nombreBuscar;
+    }
+
+    public void setNombreBuscar(String nombreBuscar) {
+        this.nombreBuscar = nombreBuscar;
+    }
+
+    public boolean getActivoBuscado() {
+        return activoBuscado;
+    }
+
+    public void setActivoBuscado(boolean activoBuscado) {
+        this.activoBuscado = activoBuscado;
     }
 
     @FacesConverter(forClass = Categorias.class)

@@ -17,7 +17,7 @@
                         <p:outputLabel value="#{bundle.CreateCategoriasLabel_nombre}" for="nombre" />
                         <p:inputText id="nombre" value="#{categoriasController.selected.nombre}" title="#{bundle.CreateCategoriasTitle_nombre}" required="true" requiredMessage="#{bundle.CreateCategoriasRequiredMessage_nombre}"/>
                         <p:outputLabel value="#{bundle.CreateCategoriasLabel_activa}" for="activa" />
-                        <p:selectBooleanCheckbox id="activa" value="#{categoriasController.selected.activa}" required="true" requiredMessage="#{bundle.EditCategoriasRequiredMessage_activa}"/>
+                        <p:selectBooleanCheckbox id="activa" value="#{categoriasController.selected.activa}" />
                         <p:outputLabel value="#{bundle.CreateCategoriasLabel_pariente}" for="pariente" />
                         <p:inputText id="pariente" value="#{categoriasController.selected.pariente}" title="#{bundle.CreateCategoriasTitle_pariente}" required="true" requiredMessage="#{bundle.CreateCategoriasRequiredMessage_pariente}"/>
                     </p:panelGrid>

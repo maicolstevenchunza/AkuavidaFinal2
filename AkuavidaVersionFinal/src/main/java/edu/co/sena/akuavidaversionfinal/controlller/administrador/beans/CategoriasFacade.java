@@ -6,9 +6,11 @@
 package edu.co.sena.akuavidaversionfinal.controlller.administrador.beans;
 
 import edu.co.sena.akuavidaversionfinal.model.entities.Categorias;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +28,30 @@ public class CategoriasFacade extends AbstractFacade<Categorias> {
 
     public CategoriasFacade() {
         super(Categorias.class);
+    }
+     @Override
+    public void remove(Categorias entity) {
+        getEntityManager().remove(getEntityManager().find(Categorias.class, entity.getIDCategoria()));
+        
+    }
+
+    public List<Categorias> finById(Object id) {
+        Query queryJPQL = getEntityManager().createNamedQuery("Categorias.findByIDCategoria");
+        queryJPQL.setParameter("iDCategoria", id);
+        return queryJPQL.getResultList();
+    }
+
+    public List<Categorias> findByNombreCateg(String nombreCatBuscar) {
+        Query queryJPQL = getEntityManager().createNamedQuery("Categorias.findByNombre");
+        queryJPQL.setParameter("nombre", nombreCatBuscar);
+        return queryJPQL.getResultList();
+
+    }
+
+    public List<Categorias> findByEstado(boolean estado) {
+        Query queryJPQL = getEntityManager().createNamedQuery("Categorias.findByActiva");
+        queryJPQL.setParameter("activa", estado);
+        return queryJPQL.getResultList();
     }
     
 }

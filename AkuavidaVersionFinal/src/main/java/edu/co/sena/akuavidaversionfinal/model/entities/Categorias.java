@@ -57,7 +57,7 @@ public class Categorias implements Serializable {
     @NotNull
     @Column(name = "Pariente")
     private int pariente;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoriasIDCategoria", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "categoriasIDCategoria", fetch = FetchType.EAGER)
     private List<Producto> productoList;
 
     public Categorias() {
