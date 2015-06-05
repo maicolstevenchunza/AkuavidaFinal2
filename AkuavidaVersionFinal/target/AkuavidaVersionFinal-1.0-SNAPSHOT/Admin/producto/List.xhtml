@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/Admin/templateAdmin.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListProductoTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="ProductoListForm">
+                <p:panel header="#{bundle.ListProductoTitle}">
+                    <p:dataTable id="datalist" value="#{productoController.items}" var="item"
+                                 selectionMode="single" selection="#{productoController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.IDproducto}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_IDproducto}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.IDproducto}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_nombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_precio}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.precio}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_imagen}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.imagen}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_descripcion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_cantidad}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cantidad}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_activo}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.activo}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_impuesto}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.impuesto}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_categoriasIDCategoria}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.categoriasIDCategoria.nombre}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{productoController.prepareCreate}" update=":ProductoCreateForm" oncomplete="PF('ProductoCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ProductoViewForm" oncomplete="PF('ProductoViewDialog').show()" disabled="#{empty productoController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ProductoEditForm" oncomplete="PF('ProductoEditDialog').show()" disabled="#{empty productoController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{productoController.destroy}" update=":growl,datalist" disabled="#{empty productoController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <!-- El Buscador De Productos -->
+
+            <p:panel header="#{bundle.BuscadorProductoTitle}" id="panelBusqueda">
+                <p:messages autoUpdate="true"/>
+                <h:panelGroup id="displayBuscar">
+                    <h:form id="BuscarProductoForm">
+                        <p:messages autoUpdate="true" closable="true" for="buscarIdProducto"/>
+                        <h:panelGrid id="grid1" columns="9"  cellspacing="0">
+                            <p:outputLabel value="#{bundle.BuscarProductoLabel_IdProducto}" for="buscarIdProducto" />
+                            <p:inputText id="buscarIdProducto" value="#{productoController.idBuscar}" title="#{bundle.BuscarProductoTitle_IdProducto}" required="true" requiredMessage="#{bundle.CreateProductoRequiredMessage_nombre}"/>
+                            <p:commandButton id="botonIdPro"  value="#{bundle.Buscar}" update=":BuscarProductoListForm,:panelBusqueda" actionListener="#{productoController.buscarPorId}"/>
+                            <p:message for="buscarIdProducto" />
+                        </h:panelGrid>
+                    </h:form> 
+
+
+                    <!--FormularioProducto de buscar Por Nombre -->
+
+                    <h:form id="BuscarProductoForm2">
+                        <p:messages autoUpdate="true" closable="true" for="buscarIdProducto"/>
+                        <h:panelGrid id="grid1" columns="5"  cellspacing="0">
+                            <p:outputLabel for="buscarNomPro" value="#{bundle.BuscarProductoLabel_NombreProducto}" />
+                            <p:inputText id="buscarNomPro" required="true" value="#{productoController.nombreBuscar}" />
+                            <p:commandButton id="botonNomPro" icon="ui-icon-search" value="#{bundle.Buscar}" update=":BuscarProductoListForm,:panelBusqueda " actionListener="#{productoController.buscarPorNombre}" />
+                            <p:message for="buscarNomPro" />
+                        </h:panelGrid>
+                    </h:form> 
+
+                    <!--FormularioProducto de buscar Por ID Categoria -->
+
+                    <h:form id="BuscarProductoForm3">
+                        <p:messages autoUpdate="true" closable="true" for="buscarIdProducto"/>
+                        <h:panelGrid id="grid1" columns="5"  cellspacing="0">
+                            <p:outputLabel for="buscarIdCatPro" value="#{bundle.BuscarProductoLabel_IDCategoria}" />
+                            <p:inputText id="buscarIdCatPro" required="true" value="#{productoController.IDCategoriaBuscar}" />
+                            <p:commandButton id="botonIdCatPro" icon="ui-icon-search" value="#{bundle.Buscar}" update=":BuscarProductoListForm,:panelBusqueda " actionListener="#{productoController.buscarPorIdCategoria}" />
+                            <p:message for="buscarIdCatPro" />
+                        </h:panelGrid>
+                    </h:form>
+
+                    <!--FormularioProducto de buscar Por Activo La Categoria -->
+
+                    <h:form id="BuscarProductoForm4">
+                        <p:messages autoUpdate="true" closable="true" for="buscarIdProducto"/>
+                        <h:panelGrid id="grid1" columns="5"  cellspacing="0">
+                            <p:outputLabel for="buscarActivo" value="#{bundle.BuscarProductoLabel_Activa}" />
+                            <p:inputText id="buscarActivo" required="true" value="#{productoController.activoProducto}" />
+                            <p:commandButton id="botonActivo" icon="ui-icon-search" value="#{bundle.Buscar}" update=":BuscarProductoListForm,:panelBusqueda " actionListener="#{productoController.buscarPorActivo}" />
+                            <p:message for="buscarActivo" />
+                        </h:panelGrid>
+                    </h:form>
+                </h:panelGroup>
+            </p:panel> 
+
+
+
+            <!-- El Resultado De La Busqueda De Productos -->
+            <h:form id="BuscarProductoListForm">
+                <p:panel header="#{bundle.BuscarListProductosTitle}" id="panelBuscar">
+                    <p:dataTable id="datalist2" value="#{productoController.itemsBuscados}" var="itemEncontrados"
+                                 selectionMode="single" selection="#{productoController.selectedBuscar}"
+                                 paginator="true"
+                                 rowKey="#{itemEncontrados.IDproducto}"
+                                 rows="5"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="viewButtonBuscar2 editButtonBuscar2 deleteButtonBuscar2"/>
+                        <p:ajax event="rowUnselect" update="viewButtonBuscar2 editButtonBuscar2 deleteButtonBuscar2"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_IDproducto}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.IDproducto}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_nombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_precio}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.precio}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_imagen}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.imagen}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_descripcion}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.descripcion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_cantidad}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.cantidad}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_activo}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{itemEncontrados.activo}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_impuesto}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.impuesto}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProductoTitle_categoriasIDCategoria}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.categoriasIDCategoria.nombre}"/>
+                        </p:column>
+                        <f:facet name="footer">
+
+                            <p:commandButton id="viewButtonBuscar2"   icon="ui-icon-search" value="#{bundle.View}" update=":ProductoViewFormBuscar" oncomplete="PF('ProductoViewDialogBuscar').show()" disabled="#{empty productoController.selectedBuscar}"/>
+                            <p:commandButton id="editButtonBuscar2"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ProductoEditFormBuscar" oncomplete="PF('ProductoEditDialogBuscar').show()" disabled="#{empty productoController.selectedBuscar}"/>
+                            <p:commandButton id="deleteButtonBuscar2" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{productoController.eliminarBuscado}" update=":growl,:BuscarProductoListForm:datalist2, :ProductoListForm:datalist" disabled="#{empty productoController.selectedBuscar}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+            <ui:include src="ViewBuscar.xhtml"/>
+            <ui:include src="EditBuscar.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

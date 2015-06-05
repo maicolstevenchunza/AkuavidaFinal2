@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuarioEditDlgBuscar" widgetVar="UsuarioEditDialogBuscar" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditUsuarioTitle}">
+            <h:form id="UsuarioEditFormBuscar">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usuarioController.selectedBuscar != null}">
+                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_rol}" for="usuarioRolEditBuscar" />
+                        <p:selectOneMenu id="usuarioRolEditBuscar" value="#{usuarioController.selectedBuscar.rol}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_rol}">
+                            <f:selectItems value="#{usuarioController.listroles}"
+                                           var="usuarioRolEditItemBuscar"
+                                           itemValue="#{usuarioRolEditItemBuscar}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateUsuarioLabel_estado}" for="usuarioEstadoEditBuscar" />
+                        <p:selectOneMenu id="usuarioEstadoEditBuscar" value="#{usuarioController.selectedBuscar.estado}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_estado}">
+                            <f:selectItems value="#{usuarioController.listEstados}"
+                                           var="usuarioEstadoEditItemBuscar"
+                                           itemValue="#{usuarioEstadoEditItemBuscar}"/>
+                        </p:selectOneMenu>
+                       <p:outputLabel value="#{bundle.EditUsuarioLabel_correo}" for="correo" />
+                        <p:inputText id="correo" value="#{usuarioController.selectedBuscar.correo}" title="#{bundle.EditUsuarioTitle_correo}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_correo}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuarioController.update}" value="#{bundle.Save}" update="display,:UsuarioListForm:datalist,:BuscarUsuarioListForm:datalist2,:growl" oncomplete="handleSubmit(args, 'UsuarioEditDialogBuscar');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UsuarioEditDialogBuscar.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

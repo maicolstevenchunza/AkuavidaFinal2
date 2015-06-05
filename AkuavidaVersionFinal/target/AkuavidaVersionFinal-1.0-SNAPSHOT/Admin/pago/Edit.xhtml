@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PagoEditDlg" widgetVar="PagoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPagoTitle}">
+            <h:form id="PagoEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{pagoController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditPagoLabel_facturaIDFactura}" for="facturaIDFactura" />
+                        <p:inputText id="facturaIDFactura" value="#{pagoController.selected.facturaIDFactura}" title="#{bundle.EditPagoTitle_facturaIDFactura}" required="true" requiredMessage="#{bundle.EditPagoRequiredMessage_facturaIDFactura}"/>
+                        <p:outputLabel value="#{bundle.EditPagoLabel_tipoPago}" for="tipoPago" />
+                        <p:inputText id="tipoPago" value="#{pagoController.selected.tipoPago}" title="#{bundle.EditPagoTitle_tipoPago}" required="true" requiredMessage="#{bundle.EditPagoRequiredMessage_tipoPago}"/>
+                        <p:outputLabel value="#{bundle.EditPagoLabel_numeroTarjeta}" for="numeroTarjeta" />
+                        <p:inputText id="numeroTarjeta" value="#{pagoController.selected.numeroTarjeta}" title="#{bundle.EditPagoTitle_numeroTarjeta}" required="true" requiredMessage="#{bundle.EditPagoRequiredMessage_numeroTarjeta}"/>
+                        <p:outputLabel value="#{bundle.EditPagoLabel_factura}" for="factura" />
+                        <p:selectOneMenu id="factura" value="#{pagoController.selected.factura}" required="true" requiredMessage="#{bundle.EditPagoRequiredMessage_factura}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{facturaController.itemsAvailableSelectOne}"
+                                           var="facturaItem"
+                                           itemValue="#{facturaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{pagoController.update}" value="#{bundle.Save}" update="display,:PagoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PagoEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PagoEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

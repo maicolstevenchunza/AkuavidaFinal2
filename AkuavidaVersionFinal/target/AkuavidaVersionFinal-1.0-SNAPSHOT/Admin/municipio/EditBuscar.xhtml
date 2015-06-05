@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MunicipioEditDlgBuscar" widgetVar="MunicipioEditDialogBuscar" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditMunicipioTitle}">
+            <h:form id="MunicipioEditFormBuscar">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{municipioController.selectedBuscar != null}">
+                        
+                        <p:outputLabel value="#{bundle.EditMunicipioLabel_nombreMunicipio}" for="nombreMunicipio" />
+                        <p:inputText id="nombreMunicipio" value="#{municipioController.selectedBuscar.nombreMunicipio}" title="#{bundle.EditMunicipioTitle_nombreMunicipio}" required="true" requiredMessage="#{bundle.EditMunicipioRequiredMessage_nombreMunicipio}"/>
+                        <p:outputLabel value="#{bundle.EditMunicipioLabel_departamentoidDepartamento}" for="departamentoidDepartamento" />
+                        <p:selectOneMenu id="departamentoidDepartamento" value="#{municipioController.selectedBuscar.departamentoidDepartamento}" required="true" requiredMessage="#{bundle.EditMunicipioRequiredMessage_departamentoidDepartamento}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{departamentoController.itemsAvailableSelectOne}"
+                                           var="departamentoidDepartamentoItem"
+                                           itemValue="#{departamentoidDepartamentoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{municipioController.updateBuscar()}" value="#{bundle.Save}" update="display,:MunicipioListForm:datalist,:BuscarMunicipioListForm:datalist2,:growl" oncomplete="handleSubmit(args, 'MunicipioEditDialogBuscar');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MunicipioEditDialogBuscar.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

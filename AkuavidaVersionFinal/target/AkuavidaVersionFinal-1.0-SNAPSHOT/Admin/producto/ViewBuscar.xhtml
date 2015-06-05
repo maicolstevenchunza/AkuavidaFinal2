@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductoViewDlgBuscar" widgetVar="ProductoViewDialogBuscar" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewProductoTitle}">
+            <h:form id="ProductoViewFormBuscar">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{productoController.selectedBuscar != null}">
+                        <h:outputText value="#{bundle.ViewProductoLabel_IDproducto}"/>
+                        <h:outputText value="#{productoController.selectedBuscar.IDproducto}" title="#{bundle.ViewProductoTitle_IDproducto}"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_nombre}"/>
+                        <h:outputText value="#{productoController.selectedBuscar.nombre}" title="#{bundle.ViewProductoTitle_nombre}"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_precio}"/>
+                        <h:outputText value="#{productoController.selectedBuscar.precio}" title="#{bundle.ViewProductoTitle_precio}"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_imagen}"/>
+                        <h:outputText value="#{productoController.selectedBuscar.imagen}" title="#{bundle.ViewProductoTitle_imagen}"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_descripcion}"/>
+                        <h:outputText value="#{productoController.selectedBuscar.descripcion}" title="#{bundle.ViewProductoTitle_descripcion}"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_cantidad}"/>
+                        <h:outputText value="#{productoController.selectedBuscar.cantidad}" title="#{bundle.ViewProductoTitle_cantidad}"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_activo}"/>
+                        <p:selectBooleanCheckbox value="#{productoController.selectedBuscar.activo}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_impuesto}"/>
+                        <h:outputText value="#{productoController.selectedBuscar.impuesto}" title="#{bundle.ViewProductoTitle_impuesto}"/>
+                        <h:outputText value="#{bundle.ViewProductoLabel_categoriasIDCategoria}"/>
+                        <h:outputText value="#{productoController.selectedBuscar.categoriasIDCategoria.nombre}" title="#{bundle.ViewProductoTitle_categoriasIDCategoria}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ProductoViewDlgBuscar.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
