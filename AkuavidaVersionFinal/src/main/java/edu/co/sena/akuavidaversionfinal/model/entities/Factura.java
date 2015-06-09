@@ -36,8 +36,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f"),
     @NamedQuery(name = "Factura.findByIDFactura", query = "SELECT f FROM Factura f WHERE f.iDFactura = :iDFactura"),
-    @NamedQuery(name = "Factura.findByFecha", query = "SELECT f FROM Factura f WHERE f.fecha = :fecha")})
+    @NamedQuery(name = "Factura.findByFecha", query = "SELECT f FROM Factura f WHERE f.fecha = :fecha"),
+    @NamedQuery(name = "Factura.findByEstado", query = "SELECT f FROM Factura f WHERE f.estado = :estado")})
+
 public class Factura implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +50,8 @@ public class Factura implements Serializable {
     @Column(name = "Fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
+    @Column(name = "Estado")
+    private String estado;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "factura", fetch = FetchType.EAGER)
     private Pago pago;
     @JoinColumns({
@@ -104,6 +109,14 @@ public class Factura implements Serializable {
         this.pedido = pedido;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -128,5 +141,5 @@ public class Factura implements Serializable {
     public String toString() {
         return "edu.co.sena.akuavidaversionfinal.model.entities.Factura[ iDFactura=" + iDFactura + " ]";
     }
-    
+
 }
