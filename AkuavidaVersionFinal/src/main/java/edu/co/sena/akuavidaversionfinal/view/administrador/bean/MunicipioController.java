@@ -181,7 +181,7 @@ public class MunicipioController implements Serializable {
         }
     }
 
-    public Municipio getMunicipio(java.lang.String id) {
+    public Municipio getMunicipio(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
@@ -246,9 +246,9 @@ public class MunicipioController implements Serializable {
             return controller.getMunicipio(getKey(value));
         }
 
-        java.lang.String getKey(String value) {
-            java.lang.String key;
-            key = value;
+        java.lang.Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
             return key;
         }
 
