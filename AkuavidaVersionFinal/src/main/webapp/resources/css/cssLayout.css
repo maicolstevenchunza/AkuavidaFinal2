@@ -1,0 +1,78 @@
+body{
+    background-color: slategrey;
+}
+#top {
+    position: relative;
+    background-color: grey;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+    
+}
+#logo{
+    position: relative;
+    left: 12.5%;
+   height: 100px;
+   width: 250px;    
+    
+}
+
+#menuInicio{
+    position: inherit;
+    left: 33%;  
+    padding: 10px;
+    width: 700px;
+}
+
+#bottom {
+    position: relative;
+    background-color: #c2dfef;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+}
+
+#left {
+    float: left;
+    background-color: grey;
+    padding: 5px;
+    width: 300px;
+}
+
+#right {
+    float: right;
+    background-color: grey;    
+    width: 300px;
+    
+}
+
+.center_content {
+    position: relative;
+    background-color: grey;
+    padding: 5px;
+}
+
+.left_content {
+    background-color: grey;
+    padding: 5px;
+    margin-left: 170px;
+}
+
+.right_content {
+    background-color: grey;
+    padding: 5px;
+    margin: 0px 320px 0px 320px;
+}
+
+#top a:link, #top a:visited {
+  color: white;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+  color: black;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+
