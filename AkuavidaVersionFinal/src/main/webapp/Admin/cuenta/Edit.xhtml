@@ -15,7 +15,13 @@
                         <p:outputLabel value="#{bundle.EditCuentaLabel_cuentaPK_numeroDocumento}" for="cuentaPK_numeroDocumento" />
                         <p:inputText id="cuentaPK_numeroDocumento" value="#{cuentaController.selected.cuentaPK.numeroDocumento}" title="#{bundle.EditCuentaTitle_cuentaPK_numeroDocumento}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_cuentaPK_numeroDocumento}"/>
                         <p:outputLabel value="#{bundle.EditCuentaLabel_cuentaPK_tipoDocumento}" for="cuentaPK_tipoDocumento" />
-                        <p:inputText id="cuentaPK_tipoDocumento" value="#{cuentaController.selected.cuentaPK.tipoDocumento}" title="#{bundle.EditCuentaTitle_cuentaPK_tipoDocumento}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_cuentaPK_tipoDocumento}"/>
+
+                        <p:selectOneMenu id="cuentaPK_tipoDocumento" value="#{cuentaController.selected.cuentaPK.tipoDocumento}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_cuentaPK_tipoDocumento}">
+                            <f:selectItems value="#{cuentaController.listTipoDocumentos}"
+                                           var="cuentaTipoDocumentos"
+                                           itemValue="#{cuentaTipoDocumentos}"/>
+                        </p:selectOneMenu>
+
                         <p:outputLabel value="#{bundle.EditCuentaLabel_primerNombre}" for="primerNombre" />
                         <p:inputText id="primerNombre" value="#{cuentaController.selected.primerNombre}" title="#{bundle.EditCuentaTitle_primerNombre}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_primerNombre}"/>
                         <p:outputLabel value="#{bundle.EditCuentaLabel_segundoNombre}" for="segundoNombre" />

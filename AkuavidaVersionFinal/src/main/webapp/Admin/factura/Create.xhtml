@@ -16,6 +16,13 @@
                         <p:inputText id="IDFactura" value="#{facturaController.selected.IDFactura}" title="#{bundle.CreateFacturaTitle_IDFactura}" required="true" requiredMessage="#{bundle.CreateFacturaRequiredMessage_IDFactura}"/>
                         <p:outputLabel value="#{bundle.CreateFacturaLabel_fecha}" for="fecha" />
                         <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{facturaController.selected.fecha}" title="#{bundle.EditFacturaTitle_fecha}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateFacturaLabel_estado}" for="facturaEstado" />
+                        <p:selectOneMenu id="facturaEstado" value="#{facturaController.selected.estado}" required="true" requiredMessage="#{bundle.CreateFacturaRequiredMessage_estado}">
+                            <f:selectItems value="#{facturaController.listEstados}"
+                                           var="facturaEstadoItem"
+                                           itemValue="#{facturaEstadoItem}"/>
+                        </p:selectOneMenu>
+
                         <p:outputLabel value="#{bundle.CreateFacturaLabel_pago}" for="pago" />
                         <p:selectOneMenu id="pago" value="#{facturaController.selected.pago}" >
                             <f:selectItems value="#{pagoController.itemsAvailableSelectOne}"

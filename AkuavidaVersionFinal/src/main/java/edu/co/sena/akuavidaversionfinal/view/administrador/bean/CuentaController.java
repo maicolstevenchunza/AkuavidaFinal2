@@ -6,6 +6,7 @@ import edu.co.sena.akuavidaversionfinal.view.general.util.JsfUtil.PersistAction;
 import edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.CuentaFacade;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -27,8 +28,13 @@ public class CuentaController implements Serializable {
     private edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.CuentaFacade ejbFacade;
     private List<Cuenta> items = null;
     private Cuenta selected;
+    private final List<String> listTipoDocumentos;
 
     public CuentaController() {
+        this.listTipoDocumentos = Arrays.asList(ResourceBundle.getBundle("/Bundle").getString("SelectTipoCedula"),
+                ResourceBundle.getBundle("/Bundle").getString("SelectTipoTarjetaIdentidad"),
+                ResourceBundle.getBundle("/Bundle").getString("SelectTipoNIT"),
+                ResourceBundle.getBundle("/Bundle").getString("SelectTipoCedulaExtranjeria"));
     }
 
     public Cuenta getSelected() {
@@ -120,6 +126,10 @@ public class CuentaController implements Serializable {
 
     public List<Cuenta> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+
+    public List<String> getListTipoDocumentos() {
+        return listTipoDocumentos;
     }
 
     @FacesConverter(forClass = Cuenta.class)

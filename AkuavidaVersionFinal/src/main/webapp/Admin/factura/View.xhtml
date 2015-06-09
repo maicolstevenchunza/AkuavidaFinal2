@@ -18,6 +18,10 @@
                         <h:outputText value="#{facturaController.selected.fecha}" title="#{bundle.ViewFacturaTitle_fecha}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
+                        
+                        <h:outputText value="#{bundle.ViewFacturaLabel_estado}"/>
+                        <h:outputText value="#{facturaController.selected.estado}" title="#{bundle.ViewFacturaTitle_estado}"/>
+
                         <h:outputText value="#{bundle.ViewFacturaLabel_pago}"/>
                         <h:outputText value="#{facturaController.selected.pago}" title="#{bundle.ViewFacturaTitle_pago}"/>
                         <h:outputText value="#{bundle.ViewFacturaLabel_cuenta}"/>

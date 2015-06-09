@@ -16,6 +16,10 @@
                         <p:inputText id="IDFactura" value="#{facturaController.selected.IDFactura}" title="#{bundle.EditFacturaTitle_IDFactura}" required="true" requiredMessage="#{bundle.EditFacturaRequiredMessage_IDFactura}"/>
                         <p:outputLabel value="#{bundle.EditFacturaLabel_fecha}" for="fecha" />
                         <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{facturaController.selected.fecha}" title="#{bundle.EditFacturaTitle_fecha}"  showOn="button"/>
+                        
+                        <h:outputLabel value="#{bundle.EditFacturaLabel_estado}" for="estado" />
+                        <h:inputText id="estado" value="#{facturaController.selected.estado}" title="#{bundle.EditFacturaTitle_estado}" required="true" requiredMessage="#{bundle.EditFacturaRequiredMessage_estado}"/>
+
                         <p:outputLabel value="#{bundle.EditFacturaLabel_pago}" for="pago" />
                         <p:selectOneMenu id="pago" value="#{facturaController.selected.pago}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

@@ -21,7 +21,7 @@
                         <p:outputLabel value="#{bundle.EditCategoriasLabel_pariente}" for="pariente" />
                         <p:inputText id="pariente" value="#{categoriasController.selectedBuscar.pariente}" title="#{bundle.EditCategoriasTitle_pariente}" required="true" requiredMessage="#{bundle.EditCategoriasRequiredMessage_pariente}"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{categoriasController.updateBuscar()}" value="#{bundle.Save}" update="display,:CategoriasListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CategoriasEditDialog');"/>
+                    <p:commandButton actionListener="#{categoriasController.updateBuscar()}" value="#{bundle.Save}" update="display,:CategoriasListForm:datalist,:BuscarCategoriaListForm3,:growl" oncomplete="handleSubmit(args, 'CategoriasEditDialogBuscar');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="CategoriasEditDialogBuscar.hide()"/>
                 </h:panelGroup>
             </h:form>

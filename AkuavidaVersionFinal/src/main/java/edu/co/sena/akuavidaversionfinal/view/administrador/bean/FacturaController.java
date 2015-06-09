@@ -6,6 +6,7 @@ import edu.co.sena.akuavidaversionfinal.view.general.util.JsfUtil.PersistAction;
 import edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.FacturaFacade;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -27,8 +28,15 @@ public class FacturaController implements Serializable {
     private edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.FacturaFacade ejbFacade;
     private List<Factura> items = null;
     private Factura selected;
+    private Factura selectedBuscar;
+    private String idBuscar;
+
+    private final List<String> listEstados;
 
     public FacturaController() {
+        this.listEstados = Arrays.asList(ResourceBundle.getBundle("/Bundle").getString("SelectEstadoPago"),
+                ResourceBundle.getBundle("/Bundle").getString("SelectEstadoEntregado"),
+                ResourceBundle.getBundle("/Bundle").getString("SelectEstadoAnulada"));
     }
 
     public Factura getSelected() {
@@ -119,6 +127,10 @@ public class FacturaController implements Serializable {
 
     public List<Factura> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+
+    public List<String> getListEstados() {
+        return listEstados;
     }
 
     @FacesConverter(forClass = Factura.class)
