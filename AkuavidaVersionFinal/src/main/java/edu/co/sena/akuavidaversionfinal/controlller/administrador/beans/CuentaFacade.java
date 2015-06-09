@@ -6,9 +6,11 @@
 package edu.co.sena.akuavidaversionfinal.controlller.administrador.beans;
 
 import edu.co.sena.akuavidaversionfinal.model.entities.Cuenta;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,6 +18,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CuentaFacade extends AbstractFacade<Cuenta> {
+
     @PersistenceContext(unitName = "edu.co.sena_AkuavidaVersionFinal_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -27,5 +30,16 @@ public class CuentaFacade extends AbstractFacade<Cuenta> {
     public CuentaFacade() {
         super(Cuenta.class);
     }
+
+    public List<Cuenta> finByTipoDocumento(String tipoDocumento) {
+        Query queryJPQL = getEntityManager().createNamedQuery("Cuenta.findByTipoDocumento");
+        queryJPQL.setParameter("tipoDocumento", tipoDocumento);
+        return queryJPQL.getResultList();
+    }
     
+    public List<Cuenta> finByNumeroDocumento(String numeroDocumento) {
+        Query queryJPQL = getEntityManager().createNamedQuery("Cuenta.findByNumeroDocumento");
+        queryJPQL.setParameter("numeroDocumento", numeroDocumento);
+        return queryJPQL.getResultList();
+    }
 }

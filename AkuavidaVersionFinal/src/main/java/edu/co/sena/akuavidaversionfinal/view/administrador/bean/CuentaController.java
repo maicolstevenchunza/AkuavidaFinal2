@@ -4,6 +4,8 @@ import edu.co.sena.akuavidaversionfinal.model.entities.Cuenta;
 import edu.co.sena.akuavidaversionfinal.view.general.util.JsfUtil;
 import edu.co.sena.akuavidaversionfinal.view.general.util.JsfUtil.PersistAction;
 import edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.CuentaFacade;
+import edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.DepartamentoFacade;
+import edu.co.sena.akuavidaversionfinal.model.entities.Departamento;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -26,9 +28,15 @@ public class CuentaController implements Serializable {
 
     @EJB
     private edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.CuentaFacade ejbFacade;
+    private edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.DepartamentoFacade ejbFacadeDep;
     private List<Cuenta> items = null;
     private Cuenta selected;
     private final List<String> listTipoDocumentos;
+    private List<Cuenta> itemsBuscados = null;
+    private Cuenta selectedBuscar;
+    private String tipoBuscar;
+    private String numeroBuscar;
+    private List<Departamento> itemDep;
 
     public CuentaController() {
         this.listTipoDocumentos = Arrays.asList(ResourceBundle.getBundle("/Bundle").getString("SelectTipoCedula"),
@@ -55,6 +63,10 @@ public class CuentaController implements Serializable {
     private CuentaFacade getFacade() {
         return ejbFacade;
     }
+    
+    private DepartamentoFacade getFacadeDep() {
+        return ejbFacadeDep;
+    }
 
     public Cuenta prepareCreate() {
         selected = new Cuenta();
@@ -71,6 +83,14 @@ public class CuentaController implements Serializable {
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CuentaUpdated"));
+        
+    }
+
+    public void updateBuscar() {
+        persist(PersistAction.UPDATEBUSCAR, ResourceBundle.getBundle("/Bundle").getString("CuentaUpdated"));
+        items = null;
+        selected = null;
+
     }
 
     public void destroy() {
@@ -81,11 +101,41 @@ public class CuentaController implements Serializable {
         }
     }
 
+    public void eliminarBuscado() {
+        persist(PersistAction.DELETEBUSCAR, ResourceBundle.getBundle("/Bundle").getString("CuentaDeleted"));
+        if (!JsfUtil.isValidationFailed()) {
+            selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+        itemsBuscados = null;
+        selectedBuscar = null;
+
+    }
+
     public List<Cuenta> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
         return items;
+    }
+    
+        public List<Departamento> getItemsDepa() {
+        if (itemDep == null) {
+            itemDep = getFacadeDep().findAll();
+        }
+        return itemDep;
+    }
+
+    public List<Cuenta> buscarPorTipoDoc() {
+        itemsBuscados = getFacade().finByTipoDocumento(tipoBuscar);
+        items = null;
+        return itemsBuscados;
+    }
+
+    public List<Cuenta> buscarPorNumeroDoc() {
+        itemsBuscados = getFacade().finByNumeroDocumento(numeroBuscar);
+        items = null;
+        return itemsBuscados;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -96,6 +146,34 @@ public class CuentaController implements Serializable {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
+                }
+                JsfUtil.addSuccessMessage(successMessage);
+            } catch (EJBException ex) {
+                String msg = "";
+                Throwable cause = ex.getCause();
+                if (cause != null) {
+                    msg = cause.getLocalizedMessage();
+                }
+                if (msg.length() > 0) {
+                    JsfUtil.addErrorMessage(msg);
+                } else {
+                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            }
+        }
+        
+          if (selectedBuscar != null) {
+            setEmbeddableKeys();
+            try {
+                if (persistAction != PersistAction.DELETEBUSCAR) {
+                    getFacade().edit(selectedBuscar);
+                } else {
+                    getFacade().remove(selectedBuscar);
+                    tipoBuscar = null;
+                    numeroBuscar = null;
                 }
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
@@ -130,6 +208,38 @@ public class CuentaController implements Serializable {
 
     public List<String> getListTipoDocumentos() {
         return listTipoDocumentos;
+    }
+
+    public String getTipoBuscar() {
+        return tipoBuscar;
+    }
+
+    public void setTipoBuscar(String tipoBuscar) {
+        this.tipoBuscar = tipoBuscar;
+    }
+
+    public String getNumeroBuscar() {
+        return numeroBuscar;
+    }
+
+    public void setNumeroBuscar(String numeroBuscar) {
+        this.numeroBuscar = numeroBuscar;
+    }
+
+    public Cuenta getSelectedBuscar() {
+        return selectedBuscar;
+    }
+
+    public void setSelectedBuscar(Cuenta selectedBuscar) {
+        this.selectedBuscar = selectedBuscar;
+    }
+
+    public List<Cuenta> getItemsBuscados() {
+        return itemsBuscados;
+    }
+
+    public void setItemsBuscados(List<Cuenta> itemsBuscados) {
+        this.itemsBuscados = itemsBuscados;
     }
 
     @FacesConverter(forClass = Cuenta.class)

@@ -61,7 +61,7 @@ public class Domicilio implements Serializable {
     @JoinColumns({
         @JoinColumn(name = "Cuenta_Tipo_Documento", referencedColumnName = "Tipo_Documento", insertable = false, updatable = false),
         @JoinColumn(name = "Cuenta_Numero_Documento", referencedColumnName = "Numero_Documento", insertable = false, updatable = false)})
-    @OneToOne(optional = false, fetch = FetchType.EAGER)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta cuenta;
 
     public Domicilio() {
@@ -152,7 +152,7 @@ public class Domicilio implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.co.sena.akuavidaversionfinal.model.entities.Domicilio[ domicilioPK=" + domicilioPK + " ]";
+        return "Ciudad: " + getCiudad()+ " -- " + " Direccion: " + getDireccion()+ " -- " + " Telefono: " + getTelefono();
     }
     
 }

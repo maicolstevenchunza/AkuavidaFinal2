@@ -38,12 +38,18 @@
                         <p:inputText id="rool" value="#{cuentaController.selected.rool}" title="#{bundle.CreateCuentaTitle_rool}" required="true" requiredMessage="#{bundle.CreateCuentaRequiredMessage_rool}"/>
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_activo}" for="activo" />
                         <p:selectBooleanCheckbox id="activo" value="#{cuentaController.selected.activo}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_activo}"/>
-                        <p:outputLabel value="#{bundle.CreateCuentaLabel_domicilio}" for="domicilio" />
-                        <p:selectOneMenu id="domicilio" value="#{cuentaController.selected.domicilio}" >
-                            <f:selectItems value="#{domicilioController.itemsAvailableSelectOne}"
+                       
+                        <p:outputLabel value="#{bundle.CreateCuentaLabel_departamento}" for="departamento" />
+                        <p:selectOneMenu id="departamento"  >
+                            <f:selectItems value="#{cuentaController.itemsDepa}"
+                                           
                                            var="domicilioItem"
                                            itemValue="#{domicilioItem}"/>
                         </p:selectOneMenu>
+                        
+                        
+                        
+                        
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_usuarioidUsuario}" for="usuarioidUsuario" />
                         <p:selectOneMenu id="usuarioidUsuario" value="#{cuentaController.selected.usuarioidUsuario}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_usuarioidUsuario}">
                             <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"

@@ -228,7 +228,7 @@ public class Cuenta implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.co.sena.akuavidaversionfinal.model.entities.Cuenta[ cuentaPK=" + cuentaPK + " ]";
+        return "Tipo Documento: "+getCuentaPK().getTipoDocumento() + " -- " + " Numero Documento: " + getCuentaPK().getNumeroDocumento();
     }
     
 }

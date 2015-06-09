@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CuentaViewDlgBuscar" widgetVar="CuentaViewDialogBuscar" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCuentaTitle}">
+            <h:form id="CuentaViewFormBuscar">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cuentaController.selectedBuscar != null}">
+                        <h:outputText value="#{bundle.ViewCuentaLabel_cuentaPK_numeroDocumento}"/>
+                        <h:outputText value="#{cuentaController.selectedBuscar.cuentaPK.numeroDocumento}" title="#{bundle.ViewCuentaTitle_cuentaPK_numeroDocumento}"/>
+                        <h:outputText value="#{bundle.ViewCuentaLabel_cuentaPK_tipoDocumento}"/>
+                        <h:outputText value="#{cuentaController.selectedBuscar.cuentaPK.tipoDocumento}" title="#{bundle.ViewCuentaTitle_cuentaPK_tipoDocumento}"/>
+                        <h:outputText value="#{bundle.ViewCuentaLabel_primerNombre}"/>
+                        <h:outputText value="#{cuentaController.selectedBuscar.primerNombre}" title="#{bundle.ViewCuentaTitle_primerNombre}"/>
+                        <h:outputText value="#{bundle.ViewCuentaLabel_segundoNombre}"/>
+                        <h:outputText value="#{cuentaController.selectedBuscar.segundoNombre}" title="#{bundle.ViewCuentaTitle_segundoNombre}"/>
+                        <h:outputText value="#{bundle.ViewCuentaLabel_primerApellido}"/>
+                        <h:outputText value="#{cuentaController.selectedBuscar.primerApellido}" title="#{bundle.ViewCuentaTitle_primerApellido}"/>
+                        <h:outputText value="#{bundle.ViewCuentaLabel_segundoApellido}"/>
+                        <h:outputText value="#{cuentaController.selectedBuscar.segundoApellido}" title="#{bundle.ViewCuentaTitle_segundoApellido}"/>
+                        <h:outputText value="#{bundle.ViewCuentaLabel_direccion}"/>
+                        <h:outputText value="#{cuentaController.selectedBuscar.direccion}" title="#{bundle.ViewCuentaTitle_direccion}"/>
+                        <h:outputText value="#{bundle.ViewCuentaLabel_telefono}"/>
+                        <h:outputText value="#{cuentaController.selectedBuscar.telefono}" title="#{bundle.ViewCuentaTitle_telefono}"/>
+                        <h:outputText value="#{bundle.ViewCuentaLabel_rool}"/>
+                        <h:outputText value="#{cuentaController.selectedBuscar.rool}" title="#{bundle.ViewCuentaTitle_rool}"/>
+                        <h:outputText value="#{bundle.ViewCuentaLabel_activo}"/>
+                        <p:selectBooleanCheckbox value="#{cuentaController.selectedBuscar.activo}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewCuentaLabel_domicilio}"/>
+                        <h:outputText value="#{cuentaController.selectedBuscar.domicilio}" title="#{bundle.ViewCuentaTitle_domicilio}"/>
+                        <h:outputText value="#{bundle.ViewCuentaLabel_usuarioidUsuario}"/>
+                        <h:outputText value="#{cuentaController.selectedBuscar.usuarioidUsuario}" title="#{bundle.ViewCuentaTitle_usuarioidUsuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="CuentaViewDialogBuscar.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

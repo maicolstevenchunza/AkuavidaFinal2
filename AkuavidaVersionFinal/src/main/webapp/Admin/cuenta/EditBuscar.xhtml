@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CuentaEditDlgBuscar" widgetVar="CuentaEditDialogBuscar" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCuentaTitle}">
+            <h:form id="CuentaEditFormBuscar">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cuentaController.selectedBuscar != null}">
+                        <p:outputLabel value="#{bundle.EditCuentaLabel_cuentaPK_numeroDocumento}" for="cuentaPK_numeroDocumento" />
+                        <p:inputText id="cuentaPK_numeroDocumento" value="#{cuentaController.selectedBuscar.cuentaPK.numeroDocumento}" title="#{bundle.EditCuentaTitle_cuentaPK_numeroDocumento}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_cuentaPK_numeroDocumento}"/>
+                        <p:outputLabel value="#{bundle.EditCuentaLabel_cuentaPK_tipoDocumento}" for="cuentaPK_tipoDocumento" />
+
+                        <p:selectOneMenu id="cuentaPK_tipoDocumento" value="#{cuentaController.selectedBuscar.cuentaPK.tipoDocumento}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_cuentaPK_tipoDocumento}">
+                            <f:selectItems value="#{cuentaController.listTipoDocumentos}"
+                                           var="cuentaTipoDocumentos"
+                                           itemValue="#{cuentaTipoDocumentos}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{bundle.EditCuentaLabel_primerNombre}" for="primerNombre" />
+                        <p:inputText id="primerNombre" value="#{cuentaController.selectedBuscar.primerNombre}" title="#{bundle.EditCuentaTitle_primerNombre}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_primerNombre}"/>
+                        <p:outputLabel value="#{bundle.EditCuentaLabel_segundoNombre}" for="segundoNombre" />
+                        <p:inputText id="segundoNombre" value="#{cuentaController.selectedBuscar.segundoNombre}" title="#{bundle.EditCuentaTitle_segundoNombre}" />
+                        <p:outputLabel value="#{bundle.EditCuentaLabel_primerApellido}" for="primerApellido" />
+                        <p:inputText id="primerApellido" value="#{cuentaController.selectedBuscar.primerApellido}" title="#{bundle.EditCuentaTitle_primerApellido}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_primerApellido}"/>
+                        <p:outputLabel value="#{bundle.EditCuentaLabel_segundoApellido}" for="segundoApellido" />
+                        <p:inputText id="segundoApellido" value="#{cuentaController.selectedBuscar.segundoApellido}" title="#{bundle.EditCuentaTitle_segundoApellido}" />
+                        <p:outputLabel value="#{bundle.EditCuentaLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{cuentaController.selectedBuscar.direccion}" title="#{bundle.EditCuentaTitle_direccion}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_direccion}"/>
+                        <p:outputLabel value="#{bundle.EditCuentaLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{cuentaController.selectedBuscar.telefono}" title="#{bundle.EditCuentaTitle_telefono}" />
+                        <p:outputLabel value="#{bundle.EditCuentaLabel_rool}" for="rool" />
+                        <p:inputText id="rool" value="#{cuentaController.selectedBuscar.rool}" title="#{bundle.EditCuentaTitle_rool}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_rool}"/>
+                        <p:outputLabel value="#{bundle.EditCuentaLabel_activo}" for="activo" />
+                        <p:selectBooleanCheckbox id="activo" value="#{cuentaController.selectedBuscar.activo}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_activo}"/>
+                        <p:outputLabel value="#{bundle.EditCuentaLabel_domicilio}" for="domicilio" />
+                        <p:selectOneMenu id="domicilio" value="#{cuentaController.selectedBuscar.domicilio}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{domicilioController.itemsAvailableSelectOne}"
+                                           var="domicilioItem"
+                                           itemValue="#{domicilioItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditCuentaLabel_usuarioidUsuario}" for="usuarioidUsuario" />
+                        <p:selectOneMenu id="usuarioidUsuario" value="#{cuentaController.selectedBuscar.usuarioidUsuario}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_usuarioidUsuario}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
+                                           var="usuarioidUsuarioItem"
+                                           itemValue="#{usuarioidUsuarioItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cuentaController.updateBuscar}" value="#{bundle.Save}" update="display,:BuscarCuentaListForm:datalist2, :CuentaListForm:datalist,  :growl" oncomplete="handleSubmit(args, 'CuentaEditDialogBuscar');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CuentaEditDialogBuscar.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

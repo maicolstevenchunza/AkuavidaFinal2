@@ -153,7 +153,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.co.sena.akuavidaversionfinal.model.entities.Usuario[ idUsuario=" + idUsuario + " ]";
+        return getIdUsuario();
     }
     
 }
