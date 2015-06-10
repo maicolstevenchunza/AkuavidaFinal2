@@ -83,10 +83,10 @@ public class Cuenta implements Serializable {
     private boolean activo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cuenta", fetch = FetchType.EAGER)
     private List<Factura> facturaList;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "cuenta", fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "cuenta", fetch = FetchType.LAZY)
     private Domicilio domicilio;
     @JoinColumn(name = "Usuario_idUsuario", referencedColumnName = "idUsuario")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario usuarioidUsuario;
 
     public Cuenta() {

@@ -6,6 +6,8 @@ import edu.co.sena.akuavidaversionfinal.view.general.util.JsfUtil.PersistAction;
 import edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.CuentaFacade;
 import edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.DepartamentoFacade;
 import edu.co.sena.akuavidaversionfinal.model.entities.Departamento;
+import edu.co.sena.akuavidaversionfinal.model.entities.Domicilio;
+import edu.co.sena.akuavidaversionfinal.model.entities.Municipio;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -16,18 +18,19 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 
 @Named("cuentaController")
-@SessionScoped
+@ViewScoped
 public class CuentaController implements Serializable {
 
     @EJB
     private edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.CuentaFacade ejbFacade;
+    @EJB
     private edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.DepartamentoFacade ejbFacadeDep;
     private List<Cuenta> items = null;
     private Cuenta selected;
@@ -36,7 +39,12 @@ public class CuentaController implements Serializable {
     private Cuenta selectedBuscar;
     private String tipoBuscar;
     private String numeroBuscar;
-    private List<Departamento> itemDep;
+    
+    
+    private List<Departamento> itemDep = null;
+    private List<Municipio> itemsMunicipio = null;
+    private String departamentoSeleccionado;
+    private String municipioSeleccionado;
 
     public CuentaController() {
         this.listTipoDocumentos = Arrays.asList(ResourceBundle.getBundle("/Bundle").getString("SelectTipoCedula"),
@@ -63,15 +71,28 @@ public class CuentaController implements Serializable {
     private CuentaFacade getFacade() {
         return ejbFacade;
     }
-    
+
     private DepartamentoFacade getFacadeDep() {
         return ejbFacadeDep;
     }
 
     public Cuenta prepareCreate() {
         selected = new Cuenta();
+        selected.setDomicilio(new Domicilio());
         initializeEmbeddableKey();
+        obtenedorDepartamentos();
         return selected;
+    }
+
+    public void obtenedorDepartamentos() {
+        if (itemDep == null) {
+            itemDep =  getFacadeDep().findAll();
+        }
+    }
+
+    public void obtenedorMunicipios() {
+        Departamento dt = getFacadeDep().findByNombre(departamentoSeleccionado);
+        itemsMunicipio = dt.getMunicipioList();
     }
 
     public void create() {
@@ -83,7 +104,7 @@ public class CuentaController implements Serializable {
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("CuentaUpdated"));
-        
+
     }
 
     public void updateBuscar() {
@@ -118,13 +139,13 @@ public class CuentaController implements Serializable {
         }
         return items;
     }
-    
-        public List<Departamento> getItemsDepa() {
-        if (itemDep == null) {
-            itemDep = getFacadeDep().findAll();
-        }
-        return itemDep;
-    }
+
+//    public List<Departamento> getItemsDepa() {
+//        if (itemDep == null) {
+//            itemDep = getFacadeDep().findAll();
+//        }
+//        return itemDep;
+//    }
 
     public List<Cuenta> buscarPorTipoDoc() {
         itemsBuscados = getFacade().finByTipoDocumento(tipoBuscar);
@@ -164,8 +185,8 @@ public class CuentaController implements Serializable {
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             }
         }
-        
-          if (selectedBuscar != null) {
+
+        if (selectedBuscar != null) {
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETEBUSCAR) {
@@ -240,6 +261,38 @@ public class CuentaController implements Serializable {
 
     public void setItemsBuscados(List<Cuenta> itemsBuscados) {
         this.itemsBuscados = itemsBuscados;
+    }
+
+    public List<Departamento> getItemDep() {
+        return itemDep;
+    }
+
+    public void setItemDep(List<Departamento> itemDep) {
+        this.itemDep = itemDep;
+    }
+
+    public List<Municipio> getItemsMunicipio() {
+        return itemsMunicipio;
+    }
+
+    public void setItemsMunicipio(List<Municipio> itemsMunicipio) {
+        this.itemsMunicipio = itemsMunicipio;
+    }
+
+    public String getDepartamentoSeleccionado() {
+        return departamentoSeleccionado;
+    }
+
+    public void setDepartamentoSeleccionado(String departamentoSeleccionado) {
+        this.departamentoSeleccionado = departamentoSeleccionado;
+    }
+
+    public String getMunicipioSeleccionado() {
+        return municipioSeleccionado;
+    }
+
+    public void setMunicipioSeleccionado(String municipioSeleccionado) {
+        this.municipioSeleccionado = municipioSeleccionado;
     }
 
     @FacesConverter(forClass = Cuenta.class)

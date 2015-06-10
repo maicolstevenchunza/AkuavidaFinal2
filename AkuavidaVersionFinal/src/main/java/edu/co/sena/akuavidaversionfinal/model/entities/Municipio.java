@@ -52,7 +52,7 @@ public class Municipio implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "municipioidMunicipio", fetch = FetchType.EAGER)
     private List<Domicilio> domicilioList;
     @JoinColumn(name = "Departamento_idDepartamento", referencedColumnName = "idDepartamento")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Departamento departamentoidDepartamento;
 
     public Municipio() {
@@ -122,7 +122,7 @@ public class Municipio implements Serializable {
 
     @Override
     public String toString() {
-        return getNombreMunicipio();
+        return nombreMunicipio;
     }
     
 }
