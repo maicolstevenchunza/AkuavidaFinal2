@@ -50,7 +50,7 @@ public class Item implements Serializable {
     @Column(name = "Costo_Unitario")
     private float costoUnitario;
     @JoinColumn(name = "Producto_ID_producto", referencedColumnName = "ID_producto", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Producto producto;
     @JoinColumn(name = "Pedido_Factura_ID_Factura", referencedColumnName = "Factura_ID_Factura", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)

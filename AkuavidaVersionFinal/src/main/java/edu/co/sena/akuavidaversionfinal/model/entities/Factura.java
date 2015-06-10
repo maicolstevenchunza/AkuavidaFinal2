@@ -52,14 +52,14 @@ public class Factura implements Serializable {
     private Date fecha;
     @Column(name = "Estado")
     private String estado;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "factura", fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "factura", fetch = FetchType.LAZY)
     private Pago pago;
     @JoinColumns({
         @JoinColumn(name = "Cuenta_Tipo_Documento", referencedColumnName = "Tipo_Documento"),
         @JoinColumn(name = "Cuenta_Numero_Documento", referencedColumnName = "Numero_Documento")})
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cuenta cuenta;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "factura", fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "factura", fetch = FetchType.LAZY)
     private Pedido pedido;
 
     public Factura() {

@@ -12,10 +12,15 @@
             <h:form id="PagoCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{pagoController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_facturaIDFactura}" for="facturaIDFactura" />
-                        <p:inputText id="facturaIDFactura" value="#{pagoController.selected.facturaIDFactura}" title="#{bundle.CreatePagoTitle_facturaIDFactura}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_facturaIDFactura}"/>
-                        <p:outputLabel value="#{bundle.CreatePagoLabel_tipoPago}" for="tipoPago" />
-                        <p:inputText id="tipoPago" value="#{pagoController.selected.tipoPago}" title="#{bundle.CreatePagoTitle_tipoPago}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_tipoPago}"/>
+
+
+                        <p:outputLabel value="#{bundle.CreatePagoLabel_tipoPago}" for="tipoPago" />                        
+
+                        <p:selectOneMenu id="tipoPago" value="#{pagoController.selected.tipoPago}"  required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_tipoPago}">
+                            <f:selectItems value="#{pagoController.listPago}"
+                                           var="pagoItem"
+                                           itemValue="#{pagoItem}"/>
+                        </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreatePagoLabel_numeroTarjeta}" for="numeroTarjeta" />
                         <p:inputText id="numeroTarjeta" value="#{pagoController.selected.numeroTarjeta}" title="#{bundle.CreatePagoTitle_numeroTarjeta}" required="true" requiredMessage="#{bundle.CreatePagoRequiredMessage_numeroTarjeta}"/>
                         <p:outputLabel value="#{bundle.CreatePagoLabel_factura}" for="factura" />

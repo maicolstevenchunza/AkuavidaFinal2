@@ -120,7 +120,7 @@ public class Pago implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.co.sena.akuavidaversionfinal.model.entities.Pago[ facturaIDFactura=" + facturaIDFactura + " ]";
+        return getTipoPago();
     }
     
 }

@@ -57,7 +57,7 @@ public class Pedido implements Serializable {
     @NotNull
     @Column(name = "Total")
     private float total;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido", fetch = FetchType.LAZY)
     private List<Item> itemList;
     @JoinColumn(name = "Factura_ID_Factura", referencedColumnName = "ID_Factura", insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.EAGER)

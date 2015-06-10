@@ -18,7 +18,7 @@
                         <h:outputText value="#{facturaController.selected.fecha}" title="#{bundle.ViewFacturaTitle_fecha}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
-                        
+
                         <h:outputText value="#{bundle.ViewFacturaLabel_estado}"/>
                         <h:outputText value="#{facturaController.selected.estado}" title="#{bundle.ViewFacturaTitle_estado}"/>
 
@@ -26,13 +26,16 @@
                         <h:outputText value="#{facturaController.selected.pago}" title="#{bundle.ViewFacturaTitle_pago}"/>
                         <h:outputText value="#{bundle.ViewFacturaLabel_cuenta}"/>
                         <h:outputText value="#{facturaController.selected.cuenta}" title="#{bundle.ViewFacturaTitle_cuenta}"/>
-                        <h:outputText value="#{bundle.ViewFacturaLabel_pedido}"/>
-                        <h:outputText value="#{facturaController.selected.pedido}" title="#{bundle.ViewFacturaTitle_pedido}"/>
+                        <h:outputText value="#{bundle.ViewFacturaLabel_Subtotal}"/>
+                        <h:outputText value="#{facturaController.selected.pedido.subtotal}" title="#{bundle.ViewFacturaTitle_Subtotal}"/>
+                        <h:outputText value="#{bundle.ViewFacturaLabel_Total}"/>
+                        <h:outputText value="#{facturaController.selected.pedido.total}" title="#{bundle.ViewFacturaTitle_Total}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="FacturaViewDialog.hide()"/>
+                    <p:commandButton value="#{bundle.VerPro}" update=":FacturaVerProForm" oncomplete="PF('FacturaVerProDialog').show()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
-
+        <ui:include src="VerProductos.xhtml"/>
     </ui:composition>
 </html>
