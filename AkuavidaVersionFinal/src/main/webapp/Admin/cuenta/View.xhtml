@@ -11,7 +11,7 @@
         <p:dialog id="CuentaViewDlg" widgetVar="CuentaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCuentaTitle}">
             <h:form id="CuentaViewForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{cuentaController.selected != null}">
+                    <p:panelGrid columns="4" rendered="#{cuentaController.selected != null}">
                         <h:outputText value="#{bundle.ViewCuentaLabel_cuentaPK_numeroDocumento}"/>
                         <h:outputText value="#{cuentaController.selected.cuentaPK.numeroDocumento}" title="#{bundle.ViewCuentaTitle_cuentaPK_numeroDocumento}"/>
                         <h:outputText value="#{bundle.ViewCuentaLabel_cuentaPK_tipoDocumento}"/>
