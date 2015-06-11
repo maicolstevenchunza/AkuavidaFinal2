@@ -7,6 +7,7 @@ import edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.FacturaF
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -14,22 +15,27 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 
 @Named("facturaController")
-@SessionScoped
+@ViewScoped
 public class FacturaController implements Serializable {
 
     @EJB
     private edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.FacturaFacade ejbFacade;
     private List<Factura> items = null;
+    private List<Factura> itemsBuscados = null;
     private Factura selected;
     private Factura selectedBuscar;
-    private String idBuscar;
+    private Integer idBuscar;
+    private Date fecha;
+    private String estadoBuscar;
+ 
 
     private final List<String> listEstados;
 
@@ -37,6 +43,7 @@ public class FacturaController implements Serializable {
         this.listEstados = Arrays.asList(ResourceBundle.getBundle("/Bundle").getString("SelectEstadoPago"),
                 ResourceBundle.getBundle("/Bundle").getString("SelectEstadoEntregado"),
                 ResourceBundle.getBundle("/Bundle").getString("SelectEstadoAnulada"));
+
     }
 
     public Factura getSelected() {
@@ -72,6 +79,14 @@ public class FacturaController implements Serializable {
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("FacturaUpdated"));
+        selectedBuscar = null;
+        itemsBuscados = null;
+    }
+
+    public void updateBuscar() {
+        persist(PersistAction.UPDATEBUSCAR, ResourceBundle.getBundle("/Bundle").getString("FacturaUpdated"));
+        items = null;
+        selected = null;
     }
 
     public void destroy() {
@@ -88,6 +103,24 @@ public class FacturaController implements Serializable {
         }
         return items;
     }
+    
+    public List<Factura> buscarPorId() {
+        itemsBuscados = getFacade().finByIdFac(idBuscar);
+        items = null;
+        return itemsBuscados;
+    }
+    public List<Factura> buscarPorFecha() {
+        itemsBuscados = getFacade().finByFechaFac(fecha);
+        items = null;
+        return itemsBuscados;
+    }
+      public List<Factura> buscarPorEstado() {
+        itemsBuscados = getFacade().finByEstadoFac(estadoBuscar);
+        items = null;
+        idBuscar = null;
+        return itemsBuscados;
+    }
+    
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
@@ -97,6 +130,31 @@ public class FacturaController implements Serializable {
                     getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
+                }
+                JsfUtil.addSuccessMessage(successMessage);
+            } catch (EJBException ex) {
+                String msg = "";
+                Throwable cause = ex.getCause();
+                if (cause != null) {
+                    msg = cause.getLocalizedMessage();
+                }
+                if (msg.length() > 0) {
+                    JsfUtil.addErrorMessage(msg);
+                } else {
+                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            }
+        }
+        if (selectedBuscar != null) {
+            setEmbeddableKeys();
+            try {
+                if (persistAction != PersistAction.DELETEBUSCAR) {
+                    getFacade().edit(selectedBuscar);
+                } else {
+                    getFacade().remove(selectedBuscar);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
@@ -131,6 +189,46 @@ public class FacturaController implements Serializable {
 
     public List<String> getListEstados() {
         return listEstados;
+    }
+
+    public Factura getSelectedBuscar() {
+        return selectedBuscar;
+    }
+
+    public void setSelectedBuscar(Factura selectedBuscar) {
+        this.selectedBuscar = selectedBuscar;
+    }
+
+    public Integer getIdBuscar() {
+        return idBuscar;
+    }
+
+    public void setIdBuscar(Integer idBuscar) {
+        this.idBuscar = idBuscar;
+    }
+
+    public List<Factura> getItemsBuscados() {
+        return itemsBuscados;
+    }
+
+    public void setItemsBuscados(List<Factura> itemsBuscados) {
+        this.itemsBuscados = itemsBuscados;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getEstadoBuscar() {
+        return estadoBuscar;
+    }
+
+    public void setEstadoBuscar(String estadoBuscar) {
+        this.estadoBuscar = estadoBuscar;
     }
 
     @FacesConverter(forClass = Factura.class)

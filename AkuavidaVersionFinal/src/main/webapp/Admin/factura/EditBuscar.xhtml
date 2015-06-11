@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FacturaEditDlgBuscar" widgetVar="FacturaEditDialogBuscar" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditFacturaTitle}">
+            <h:form id="FacturaEditFormBuscar">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{facturaController.selectedBuscar != null}">
+                         <p:outputLabel value="#{bundle.EditFacturaLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{facturaController.selectedBuscar.fecha}" title="#{bundle.EditFacturaTitle_fecha}"  showOn="button"/>
+                        
+                        <h:outputLabel value="#{bundle.EditFacturaLabel_estado}" for="estado" />
+                        <p:selectOneMenu id="estado" value="#{facturaController.selectedBuscar.estado}" required="true" requiredMessage="#{bundle.CreateFacturaRequiredMessage_estado}">
+                            <f:selectItems value="#{facturaController.listEstados}"
+                                           var="facturaEstadoItem"
+                                           itemValue="#{facturaEstadoItem}"/>
+                        </p:selectOneMenu>                       
+                        <p:outputLabel value="#{bundle.EditFacturaLabel_cuenta}" />
+                        <h:outputText value="#{facturaController.selectedBuscar.cuenta}" title="#{bundle.ViewFacturaTitle_cuenta}"/>
+                       
+                        
+                       
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{facturaController.updateBuscar}" value="#{bundle.Save}" update="display,:FacturaListForm:datalist,:FacturaListForm2:datalist2,:growl" oncomplete="handleSubmit(args, 'FacturaEditDialogBuscar');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="FacturaEditDialogBuscar.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -41,7 +41,7 @@
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
-                        
+
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListFacturaTitle_estado}"/>
@@ -49,19 +49,116 @@
                             <h:outputText value="#{item.estado}"/>
                         </p:column>
 
-                        
+
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListFacturaTitle_cuenta}"/>
                             </f:facet>
                             <h:outputText value="#{item.cuenta}"/>
                         </p:column>
-                      
+
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{facturaController.prepareCreate}" update=":FacturaCreateForm" oncomplete="PF('FacturaCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":FacturaViewForm" oncomplete="PF('FacturaViewDialog').show()" disabled="#{empty facturaController.selected}"/>
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":FacturaEditForm" oncomplete="PF('FacturaEditDialog').show()" disabled="#{empty facturaController.selected}"/>
-                            
+
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <!-- El Buscador De Factura -->
+            <p:panel header="#{bundle.BuscadorFacturaTitle}" id="panelBusqueda">
+                <p:messages autoUpdate="true"/>
+                <h:panelGroup id="displayBuscar">
+                    <h:form id="BuscarFacturaForm1">
+                        <p:messages autoUpdate="true" closable="true" for="buscarIdFactura"/>
+                        <h:panelGrid id="grid1" columns="4"  cellspacing="0">
+                            <p:outputLabel for="buscarFactura" value="#{bundle.BuscarFacturaLabel_IdFactura}"  />
+                            <p:inputText id="buscarFactura" value="#{facturaController.idBuscar}" title="#{bundle.BuscarFacturaTitle_IdFactura}" required="true" requiredMessage="#{bundle.CreateFacturaRequiredMessage_IDFactura}"/>
+                            <p:commandButton id="botonIdFactura" icon="ui-icon-search" value="#{bundle.Buscar}" update=":FacturaListForm2, :panelBusqueda" actionListener="#{facturaController.buscarPorId}"/>
+                            <p:message for="buscarFactura" />
+                        </h:panelGrid>
+                    </h:form>
+                    <!-- El Buscador De Factura por Fecha-->
+                    <h:form id="BuscarFacturaForm2">
+                        <p:messages autoUpdate="true" closable="true" for="buscarIdFactura"/>
+                        <h:panelGrid id="grid1" columns="4"  cellspacing="0">
+                            <p:outputLabel for="buscarFecha" value="#{bundle.BuscarFacturaLabel_Fecha}"  />
+                            <p:calendar id="buscarFecha" pattern="MM/dd/yyyy" value="#{facturaController.fecha}" title="#{bundle.BuscarFacturaTitle_IdFactura}" required="true" requiredMessage="#{bundle.CreateFacturaRequiredMessage_IDFactura}" showOn="button"/>
+                            <p:commandButton id="botonFecha" icon="ui-icon-search" value="#{bundle.Buscar}" update=":FacturaListForm2, :panelBusqueda" actionListener="#{facturaController.buscarPorFecha}"/>
+                            <p:message for="buscarFecha" />
+                        </h:panelGrid>
+                    </h:form>
+                    <!-- El Buscador De Factura por Estado-->
+                    <h:form id="BuscarFacturaForm3">
+                        <p:messages autoUpdate="true" closable="true" for="buscarIdFactura"/>
+                        <h:panelGrid id="grid1" columns="4"  cellspacing="0">
+                            <p:outputLabel value="#{bundle.CreateFacturaLabel_estado}" for="facturaEstado" />
+                            <p:selectOneMenu id="facturaEstado" value="#{facturaController.estadoBuscar}" required="true" requiredMessage="#{bundle.CreateFacturaRequiredMessage_estado}">
+                                <f:selectItems value="#{facturaController.listEstados}"
+                                               var="facturaEstadoItemBuscar"
+                                               itemValue="#{facturaEstadoItemBuscar}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton id="botonEstado" icon="ui-icon-search" value="#{bundle.Buscar}" update=":FacturaListForm2, :panelBusqueda" actionListener="#{facturaController.buscarPorEstado}"/>
+                            <p:message for="facturaEstado" />
+                        </h:panelGrid>
+                    </h:form>
+
+
+                </h:panelGroup>
+            </p:panel>
+
+
+            <!-- Resultados De La Busqueda De Factura -->
+            <h:form id="FacturaListForm2">
+                <p:panel header="#{bundle.ListFacturaTitle2}" id="panelBuscar">
+                    <p:dataTable id="datalist2" value="#{facturaController.itemsBuscados}" var="itemEncontrados"
+                                 selectionMode="single" selection="#{facturaController.selectedBuscar}"
+                                 paginator="true"
+                                 rowKey="#{itemEncontrados.IDFactura}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update=" viewButton2 editButton2"/>
+                        <p:ajax event="rowUnselect" update=" viewButton2 editButton2 "/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFacturaTitle_IDFactura}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.IDFactura}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFacturaTitle_fecha}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.fecha}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFacturaTitle_estado}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.estado}"/>
+                        </p:column>
+
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFacturaTitle_cuenta}"/>
+                            </f:facet>
+                            <h:outputText value="#{itemEncontrados.cuenta}"/>
+                        </p:column>
+
+                        <f:facet name="footer">
+
+                            <p:commandButton id="viewButton2"   icon="ui-icon-search" value="#{bundle.View}" update=":FacturaViewFormBuscar" oncomplete="PF('FacturaViewDialogBuscar').show()" disabled="#{empty facturaController.selectedBuscar}"/>
+                            <p:commandButton id="editButton2"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":FacturaEditFormBuscar" oncomplete="PF('FacturaEditDialogBuscar').show()" disabled="#{empty facturaController.selectedBuscar}"/>
+
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
@@ -70,6 +167,8 @@
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
+            <ui:include src="ViewBuscar.xhtml"/>
+            <ui:include src="EditBuscar.xhtml"/>
         </ui:define>
     </ui:composition>
 

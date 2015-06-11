@@ -6,6 +6,7 @@ import edu.co.sena.akuavidaversionfinal.view.general.util.JsfUtil.PersistAction;
 import edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.PagoFacade;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,17 +19,20 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 
 @Named("pagoController")
-@SessionScoped
+@ViewScoped
 public class PagoController implements Serializable {
 
     @EJB
     private edu.co.sena.akuavidaversionfinal.controlller.administrador.beans.PagoFacade ejbFacade;
     private List<Pago> items = null;
     private Pago selected;
+    private final List<String> listPago;
 
     public PagoController() {
+        this.listPago = Arrays.asList(ResourceBundle.getBundle("/Bundle").getString("SelectPagoCredito"));
     }
 
     public Pago getSelected() {
@@ -119,6 +123,10 @@ public class PagoController implements Serializable {
 
     public List<Pago> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+
+    public List<String> getListPago() {
+        return listPago;
     }
 
     @FacesConverter(forClass = Pago.class)
