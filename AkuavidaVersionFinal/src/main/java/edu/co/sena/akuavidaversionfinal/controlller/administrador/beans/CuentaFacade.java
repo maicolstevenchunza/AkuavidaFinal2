@@ -36,10 +36,30 @@ public class CuentaFacade extends AbstractFacade<Cuenta> {
         queryJPQL.setParameter("tipoDocumento", tipoDocumento);
         return queryJPQL.getResultList();
     }
-    
+
     public List<Cuenta> finByNumeroDocumento(String numeroDocumento) {
         Query queryJPQL = getEntityManager().createNamedQuery("Cuenta.findByNumeroDocumento");
         queryJPQL.setParameter("numeroDocumento", numeroDocumento);
+        return queryJPQL.getResultList();
+    }
+
+    public List<Cuenta> findByNombre(String nombre) {
+        String sqlQuery = "SELECT * FROM cuenta cue where cue.Primer_Nombre like "
+                + "'%" + nombre + "%';";
+        Query query3 = getEntityManager().createNativeQuery(sqlQuery, Cuenta.class);
+        return query3.getResultList();
+    }
+
+    public List<Cuenta> findByApellido(String apellido) {
+        String sqlQuery = "SELECT * FROM cuenta cue where cue.Primer_Apellido like "
+                + "'%" + apellido + "%';";
+        Query query3 = getEntityManager().createNativeQuery(sqlQuery, Cuenta.class);
+        return query3.getResultList();
+    }
+    
+        public List<Cuenta> finByActiva(Boolean activo) {
+        Query queryJPQL = getEntityManager().createNamedQuery("Cuenta.findByActivo");
+        queryJPQL.setParameter("activo", activo);
         return queryJPQL.getResultList();
     }
 }

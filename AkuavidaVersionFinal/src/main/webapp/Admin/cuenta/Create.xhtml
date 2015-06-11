@@ -36,7 +36,12 @@
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_telefono}" for="telefono" />
                         <p:inputText id="telefono" value="#{cuentaController.selected.telefono}" title="#{bundle.CreateCuentaTitle_telefono}" />
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_rool}" for="rool" />
-                        <p:inputText id="rool" value="#{cuentaController.selected.rool}" title="#{bundle.CreateCuentaTitle_rool}" required="true" requiredMessage="#{bundle.CreateCuentaRequiredMessage_rool}"/>
+                        <p:selectOneMenu id="rool" value="#{cuentaController.selected.rool}" required="true" requiredMessage="#{bundle.CreateCuentaRequiredMessage_rool}">
+                            <f:selectItems value="#{cuentaController.listroles}"
+                                           var="cuentaRool"
+                                           itemValue="#{cuentaRool}"/>
+                        </p:selectOneMenu>
+                        
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_activo}" for="activo" />
                         <p:selectBooleanCheckbox id="activo" value="#{cuentaController.selected.activo}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_activo}"/>
                         <p:outputLabel value="#{bundle.CreateCuentaLabel_usuarioidUsuario}" for="usuarioidUsuario" />

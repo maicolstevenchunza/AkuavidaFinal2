@@ -11,7 +11,7 @@
         <p:dialog id="CuentaEditDlgBuscar" widgetVar="CuentaEditDialogBuscar" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCuentaTitle}">
             <h:form id="CuentaEditFormBuscar">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{cuentaController.selectedBuscar != null}">
+                    <p:panelGrid columns="4" rendered="#{cuentaController.selectedBuscar != null}">
                         <p:outputLabel value="#{bundle.EditCuentaLabel_cuentaPK_numeroDocumento}" for="cuentaPK_numeroDocumento" />
                         <p:inputText id="cuentaPK_numeroDocumento" value="#{cuentaController.selectedBuscar.cuentaPK.numeroDocumento}" title="#{bundle.EditCuentaTitle_cuentaPK_numeroDocumento}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_cuentaPK_numeroDocumento}"/>
                         <p:outputLabel value="#{bundle.EditCuentaLabel_cuentaPK_tipoDocumento}" for="cuentaPK_tipoDocumento" />
@@ -35,8 +35,12 @@
                         <p:outputLabel value="#{bundle.EditCuentaLabel_telefono}" for="telefono" />
                         <p:inputText id="telefono" value="#{cuentaController.selectedBuscar.telefono}" title="#{bundle.EditCuentaTitle_telefono}" />
                         <p:outputLabel value="#{bundle.EditCuentaLabel_rool}" for="rool" />
-                        <p:inputText id="rool" value="#{cuentaController.selectedBuscar.rool}" title="#{bundle.EditCuentaTitle_rool}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_rool}"/>
-                        <p:outputLabel value="#{bundle.EditCuentaLabel_activo}" for="activo" />
+                        <p:selectOneMenu id="rool" value="#{usuarioController.selectedBuscar.rol}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_rool}">
+                            <f:selectItems value="#{usuarioController.listroles}"
+                                           var="cuentaRoolEditBuscar"
+                                           itemValue="#{cuentaRoolEditBuscar}"/>
+                        </p:selectOneMenu>
+                         <p:outputLabel value="#{bundle.EditCuentaLabel_activo}" for="activo" />
                         <p:selectBooleanCheckbox id="activo" value="#{cuentaController.selectedBuscar.activo}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_activo}"/>
                         <p:outputLabel value="#{bundle.EditCuentaLabel_domicilio}" for="domicilio" />
                         <p:selectOneMenu id="domicilio" value="#{cuentaController.selectedBuscar.domicilio}" >
@@ -44,13 +48,6 @@
                             <f:selectItems value="#{domicilioController.itemsAvailableSelectOne}"
                                            var="domicilioItem"
                                            itemValue="#{domicilioItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditCuentaLabel_usuarioidUsuario}" for="usuarioidUsuario" />
-                        <p:selectOneMenu id="usuarioidUsuario" value="#{cuentaController.selectedBuscar.usuarioidUsuario}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_usuarioidUsuario}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
-                                           var="usuarioidUsuarioItem"
-                                           itemValue="#{usuarioidUsuarioItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{cuentaController.updateBuscar}" value="#{bundle.Save}" update="display,:BuscarCuentaListForm:datalist2, :CuentaListForm:datalist,  :growl" oncomplete="handleSubmit(args, 'CuentaEditDialogBuscar');"/>

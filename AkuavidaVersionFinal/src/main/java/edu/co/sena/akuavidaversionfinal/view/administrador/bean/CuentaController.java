@@ -35,12 +35,15 @@ public class CuentaController implements Serializable {
     private List<Cuenta> items = null;
     private Cuenta selected;
     private final List<String> listTipoDocumentos;
+    private final List<String> listroles;
     private List<Cuenta> itemsBuscados = null;
     private Cuenta selectedBuscar;
     private String tipoBuscar;
     private String numeroBuscar;
-    
-    
+    private String primerNombreBuscar;
+    private String primeraApellidoBuscar;
+    private boolean activoCuenta;
+
     private List<Departamento> itemDep = null;
     private List<Municipio> itemsMunicipio = null;
     private String departamentoSeleccionado;
@@ -51,6 +54,9 @@ public class CuentaController implements Serializable {
                 ResourceBundle.getBundle("/Bundle").getString("SelectTipoTarjetaIdentidad"),
                 ResourceBundle.getBundle("/Bundle").getString("SelectTipoNIT"),
                 ResourceBundle.getBundle("/Bundle").getString("SelectTipoCedulaExtranjeria"));
+        this.listroles = Arrays.asList(ResourceBundle.getBundle("/Bundle").getString("SelectRolCliente"),
+                ResourceBundle.getBundle("/Bundle").getString("SelectRolEmpleado"),
+                ResourceBundle.getBundle("/Bundle").getString("SelectRolAdministrador"));
     }
 
     public Cuenta getSelected() {
@@ -86,7 +92,7 @@ public class CuentaController implements Serializable {
 
     public void obtenedorDepartamentos() {
         if (itemDep == null) {
-            itemDep =  getFacadeDep().findAll();
+            itemDep = getFacadeDep().findAll();
         }
     }
 
@@ -146,7 +152,6 @@ public class CuentaController implements Serializable {
 //        }
 //        return itemDep;
 //    }
-
     public List<Cuenta> buscarPorTipoDoc() {
         itemsBuscados = getFacade().finByTipoDocumento(tipoBuscar);
         items = null;
@@ -156,6 +161,34 @@ public class CuentaController implements Serializable {
     public List<Cuenta> buscarPorNumeroDoc() {
         itemsBuscados = getFacade().finByNumeroDocumento(numeroBuscar);
         items = null;
+        tipoBuscar = null;
+        return itemsBuscados;
+    }
+
+    public List<Cuenta> buscarPorPrimerNombre() {
+        itemsBuscados = getFacade().findByNombre(primerNombreBuscar);
+        items = null;
+        tipoBuscar = null;
+        numeroBuscar = null;
+        return itemsBuscados;
+    }
+
+    public List<Cuenta> buscarPorPrimerApellido() {
+        itemsBuscados = getFacade().findByApellido(primeraApellidoBuscar);
+        items = null;
+        tipoBuscar = null;
+        numeroBuscar = null;
+        primerNombreBuscar = null;
+        return itemsBuscados;
+    }
+
+    public List<Cuenta> buscarPorActivo() {
+        itemsBuscados = getFacade().finByActiva(activoCuenta);
+        items = null;
+        tipoBuscar = null;
+        numeroBuscar = null;
+        primerNombreBuscar = null;
+        primeraApellidoBuscar = null;
         return itemsBuscados;
     }
 
@@ -293,6 +326,34 @@ public class CuentaController implements Serializable {
 
     public void setMunicipioSeleccionado(String municipioSeleccionado) {
         this.municipioSeleccionado = municipioSeleccionado;
+    }
+
+    public List<String> getListroles() {
+        return listroles;
+    }
+
+    public String getPrimerNombreBuscar() {
+        return primerNombreBuscar;
+    }
+
+    public void setPrimerNombreBuscar(String primerNombreBuscar) {
+        this.primerNombreBuscar = primerNombreBuscar;
+    }
+
+    public String getPrimeraApellidoBuscar() {
+        return primeraApellidoBuscar;
+    }
+
+    public void setPrimeraApellidoBuscar(String primeraApellidoBuscar) {
+        this.primeraApellidoBuscar = primeraApellidoBuscar;
+    }
+
+    public boolean isActivoCuenta() {
+        return activoCuenta;
+    }
+
+    public void setActivoCuenta(boolean activoCuenta) {
+        this.activoCuenta = activoCuenta;
     }
 
     @FacesConverter(forClass = Cuenta.class)

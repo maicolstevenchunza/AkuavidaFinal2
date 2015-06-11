@@ -11,7 +11,7 @@
         <p:dialog id="CuentaViewDlgBuscar" widgetVar="CuentaViewDialogBuscar" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCuentaTitle}">
             <h:form id="CuentaViewFormBuscar">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{cuentaController.selectedBuscar != null}">
+                    <p:panelGrid columns="4" rendered="#{cuentaController.selectedBuscar != null}">
                         <h:outputText value="#{bundle.ViewCuentaLabel_cuentaPK_numeroDocumento}"/>
                         <h:outputText value="#{cuentaController.selectedBuscar.cuentaPK.numeroDocumento}" title="#{bundle.ViewCuentaTitle_cuentaPK_numeroDocumento}"/>
                         <h:outputText value="#{bundle.ViewCuentaLabel_cuentaPK_tipoDocumento}"/>
