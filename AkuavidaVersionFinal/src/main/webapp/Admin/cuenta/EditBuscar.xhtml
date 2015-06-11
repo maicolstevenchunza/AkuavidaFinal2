@@ -35,8 +35,8 @@
                         <p:outputLabel value="#{bundle.EditCuentaLabel_telefono}" for="telefono" />
                         <p:inputText id="telefono" value="#{cuentaController.selectedBuscar.telefono}" title="#{bundle.EditCuentaTitle_telefono}" />
                         <p:outputLabel value="#{bundle.EditCuentaLabel_rool}" for="rool" />
-                        <p:selectOneMenu id="rool" value="#{usuarioController.selectedBuscar.rol}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_rool}">
-                            <f:selectItems value="#{usuarioController.listroles}"
+                        <p:selectOneMenu id="rool" value="#{cuentaController.selectedBuscar.rool}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_rool}">
+                            <f:selectItems value="#{cuentaController.listroles}"
                                            var="cuentaRoolEditBuscar"
                                            itemValue="#{cuentaRoolEditBuscar}"/>
                         </p:selectOneMenu>
@@ -50,7 +50,7 @@
                                            itemValue="#{domicilioItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{cuentaController.updateBuscar}" value="#{bundle.Save}" update="display,:BuscarCuentaListForm:datalist2, :CuentaListForm:datalist,  :growl" oncomplete="handleSubmit(args, 'CuentaEditDialogBuscar');"/>
+                    <p:commandButton actionListener="#{cuentaController.updateBuscar}" value="#{bundle.Save}" update="display,:CuentaListForm:datalist,:BuscarCuentaListForm:datalist2,:growl" oncomplete="handleSubmit(args, 'CuentaEditDialogBuscar');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="CuentaEditDialogBuscar.hide()"/>
                 </h:panelGroup>
             </h:form>
