@@ -56,5 +56,5 @@ public class ProductoFacade extends AbstractFacade<Producto> {
         queryJPQL.setParameter("activo", ActivoPro);
         return queryJPQL.getResultList();
     }
-
+    
 }

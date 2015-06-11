@@ -11,7 +11,7 @@
         <p:dialog id="CuentaEditDlg" widgetVar="CuentaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCuentaTitle}">
             <h:form id="CuentaEditForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{cuentaController.selected != null}">
+                    <p:panelGrid columns="4" rendered="#{cuentaController.selected != null}">
                         <p:outputLabel value="#{bundle.EditCuentaLabel_cuentaPK_numeroDocumento}" for="cuentaPK_numeroDocumento" />
                         <p:inputText id="cuentaPK_numeroDocumento" value="#{cuentaController.selected.cuentaPK.numeroDocumento}" title="#{bundle.EditCuentaTitle_cuentaPK_numeroDocumento}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_cuentaPK_numeroDocumento}"/>
                         <p:outputLabel value="#{bundle.EditCuentaLabel_cuentaPK_tipoDocumento}" for="cuentaPK_tipoDocumento" />
@@ -35,7 +35,11 @@
                         <p:outputLabel value="#{bundle.EditCuentaLabel_telefono}" for="telefono" />
                         <p:inputText id="telefono" value="#{cuentaController.selected.telefono}" title="#{bundle.EditCuentaTitle_telefono}" />
                         <p:outputLabel value="#{bundle.EditCuentaLabel_rool}" for="rool" />
-                        <p:inputText id="rool" value="#{cuentaController.selected.rool}" title="#{bundle.EditCuentaTitle_rool}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_rool}"/>
+                        <p:selectOneMenu id="rool" value="#{cuentaController.selected.rool}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_rool}">
+                            <f:selectItems value="#{cuentaController.listroles}"
+                                           var="cuentaRoolEdit"
+                                           itemValue="#{cuentaRoolEdit}"/>
+                        </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditCuentaLabel_activo}" for="activo" />
                         <p:selectBooleanCheckbox id="activo" value="#{cuentaController.selected.activo}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_activo}"/>
                         <p:outputLabel value="#{bundle.EditCuentaLabel_domicilio}" for="domicilio" />
@@ -45,13 +49,7 @@
                                            var="domicilioItem"
                                            itemValue="#{domicilioItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditCuentaLabel_usuarioidUsuario}" for="usuarioidUsuario" />
-                        <p:selectOneMenu id="usuarioidUsuario" value="#{cuentaController.selected.usuarioidUsuario}" required="true" requiredMessage="#{bundle.EditCuentaRequiredMessage_usuarioidUsuario}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{usuarioController.itemsAvailableSelectOne}"
-                                           var="usuarioidUsuarioItem"
-                                           itemValue="#{usuarioidUsuarioItem}"/>
-                        </p:selectOneMenu>
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{cuentaController.update}" value="#{bundle.Save}" update="display,:CuentaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CuentaEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="CuentaEditDialog.hide()"/>

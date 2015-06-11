@@ -135,9 +135,42 @@
                         <p:messages autoUpdate="true" closable="true" for="buscarPKCuenta"/>
                         <h:panelGrid id="grid1" columns="5"  cellspacing="0">
                             <p:outputLabel for="buscarNumeCuenta" value="#{bundle.BuscarCuentaLabel_Numero_Documento}"  />
-                            <p:inputText id="buscarNumeCuenta" value="#{cuentaController.numeroBuscar}" title="#{bundle.BuscarCuentaLabel_Numero_Documento}" required="true" requiredMessage="#{bundle.CreateCuentaRequiredMessage_cuentaPK_numeroDocumento}"/>
+                            <p:inputText id="buscarNumeCuenta" value="#{cuentaController.numeroBuscar}" title="#{bundle.BuscarCuentaLabel_Numero_Documento}" required="true" requiredMessage="#{bundle.CreateCuentaRequiredMessage_Primer_Nombre}"/>
                             <p:commandButton id="botonNumeCue" icon="ui-icon-search" value="#{bundle.Buscar}" update=":BuscarCuentaListForm, :panelBusqueda" actionListener="#{cuentaController.buscarPorNumeroDoc}"/>
                             <p:message for="buscarNumeCuenta" />
+                        </h:panelGrid>
+                    </h:form>
+
+                    <!-- El Buscador De Cuenta Por PrimerNombre -->
+                    <h:form id="BuscarCuentaForm3">
+                        <p:messages autoUpdate="true" closable="true" for="buscarPKCuenta"/>
+                        <h:panelGrid id="grid1" columns="5"  cellspacing="0">
+                            <p:outputLabel for="buscarNombreCuenta" value="#{bundle.BuscarCuentaLabel_Primer_Nombre}"  />
+                            <p:inputText id="buscarNombreCuenta" value="#{cuentaController.primerNombreBuscar}" title="#{bundle.BuscarCuentaLabel_Primer_Nombre}" required="true" requiredMessage="#{bundle.CreateCuentaRequiredMessage_cuentaPK_numeroDocumento}"/>
+                            <p:commandButton id="botonNombreCue" icon="ui-icon-search" value="#{bundle.Buscar}" update=":BuscarCuentaListForm, :panelBusqueda" actionListener="#{cuentaController.buscarPorPrimerNombre}"/>
+                            <p:message for="buscarNombreCuenta" />
+                        </h:panelGrid>
+                    </h:form>
+
+                    <!-- El Buscador De Cuenta Por PrimerApellido -->
+                    <h:form id="BuscarCuentaForm4">
+                        <p:messages autoUpdate="true" closable="true" for="buscarPKCuenta"/>
+                        <h:panelGrid id="grid1" columns="5"  cellspacing="0">
+                            <p:outputLabel for="buscarApellidoCuenta" value="#{bundle.BuscarCuentaLabel_Primer_Apellido}"  />
+                            <p:inputText id="buscarApellidoCuenta" value="#{cuentaController.primeraApellidoBuscar}" title="#{bundle.BuscarCuentaLabel_Primer_Apellido}" required="true" requiredMessage="#{bundle.CreateCuentaRequiredMessage_Primer_Apellido}"/>
+                            <p:commandButton id="botonApellidoCue" icon="ui-icon-search" value="#{bundle.Buscar}" update=":BuscarCuentaListForm, :panelBusqueda" actionListener="#{cuentaController.buscarPorPrimerApellido}"/>
+                            <p:message for="buscarApellidoCuenta" />
+                        </h:panelGrid>
+                    </h:form>
+                    
+                    <!-- El Buscador De Cuenta Por Activo -->
+                    <h:form id="BuscarCuentaForm5">
+                        <p:messages autoUpdate="true" closable="true" for="buscarPKCuenta"/>
+                        <h:panelGrid id="grid1" columns="5"  cellspacing="0">
+                            <p:outputLabel for="buscarActivoCuenta" value="#{bundle.BuscarCuentaLabel_Activo}"/>
+                            <p:selectBooleanCheckbox id="buscarActivoCuenta" value="#{cuentaController.activoCuenta}" required="true" />
+                            <p:commandButton id="botonActivoCue" icon="ui-icon-search" value="#{bundle.Buscar}" update=":BuscarCuentaListForm, :panelBusqueda" actionListener="#{cuentaController.buscarPorActivo}"/>
+                            <p:message for="buscarActivoCuenta" />
                         </h:panelGrid>
                     </h:form>
                 </h:panelGroup>
