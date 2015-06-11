@@ -14,7 +14,7 @@
                     <p:dataTable id="datalist" value="#{facturaController.selected.pedido.itemList}" var="item"
                                  selectionMode="single" selection="#{productoController.selected}"
                                  paginator="true"
-                                 rowKey="#{item.itemPK}"
+                                 rowKey="#{item.producto.nombre}"
                                  
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
